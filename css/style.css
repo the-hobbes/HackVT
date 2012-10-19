@@ -13,8 +13,28 @@
   Note: IE6 works fine without this fix.
 */
 
+/* `Page element styling
+----------------------------------------------------------------------------------------------------*/
+
 body {
   min-width: 960px;
+  font: normal 100%/1.375 Helvetica, Arial, sans-serif;
+}
+
+ul {
+  font-size: 0.875em;   /* 14px / 16px = 0.875em */
+  line-height: 1.28571; /* 18px / 14px = 1.28571 */
+}
+
+li {
+  margin-bottom: 0.42857em; /* 6px / 14px = 0.42857em */
+}
+
+/* `Padding Fix
+----------------------------------------------------------------------------------------------------*/
+.paddingFix {
+  padding-left:3px;
+  padding-right:3px;
 }
 
 /* `Container
