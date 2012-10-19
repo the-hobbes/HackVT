@@ -14,7 +14,26 @@
 	</head>
 	<body>
 		<header>
-			<nav></nav>
+			<nav>
+				<ul>
+					<li><a href="index.php">Home</a></li>
+					<li><a href="link2.php">Link 2</a></li>
+					<li>
+						<a href="dropdown1.php">Drop Down 1</a>
+						<ul class="submenu">
+							<li><a href="link4.php">Link 4</a></li>
+							<li><a href="link5.php">Link 5</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="dropdown2.php">Drop Down 2</a>
+						<ul class="submenu">
+							<li><a href="link6.php">Link 6</a></li>
+						</ul>
+					</li>
+					<li><a href="link3.php"></a></li>
+				</ul>
+			</nav>
 		</header>
 		<div id="content"></div>
 		<footer></footer>

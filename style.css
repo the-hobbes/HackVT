@@ -1,0 +1,41 @@
+body
+{
+	background: #BEBF93;
+}
+
+nav
+{
+	font: 2em;
+	background: ;
+
+}
+
+nav li 
+{
+	position: relative;
+	display: inline-block;
+	vertical-align: top;
+	border-right: 2px solid #000000;
+	/* *display: inline */
+	zoom: 1;
+}
+
+nav a 
+{
+	display: block;
+	padding: 0 10px;
+	color: #000000;
+	text-decoration: none;
+}
+
+nav a:hover, nav a:focus
+{
+	background: #2E4013;
+	color: #FFFFFF;
+}
+
+nav ul li ul li
+{
+	position: absolute;
+	right: 3px; 
+}
