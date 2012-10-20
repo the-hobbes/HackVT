@@ -5,11 +5,15 @@ require_once('../../hackConf.php');
 
 class mySQLDB{
 	private $con = null;
+	private $uniStats = null;
 
 	public function __construct(){
 		$this->con =  new PDO('mysql:host='.DATABASE_HOST.';dbname='.DATABASE_NAME,DATABASE_USER,DATABASE_PASS);
 		$this->con->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 		$this->con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+		//$results = $this->con->exec("create view stats as select station_name,avg(max_tmp),avg(min_tmp),avg(avg_tmp) from daydata group by station_name;");
+		$this->uniStats = $this->getUniversalStats();
 	}
 
 	public function inputWeather($wArray){
@@ -36,7 +40,7 @@ class mySQLDB{
 
 		$result = $this->con->prepare("INSERT INTO daydata VALUES ( ?,?,?,?,?,?,?,?);");
 		$result->execute(array($station_name,$max_tmp,$min_tmp,$avg_tmp,$num,$rainfall,$year,$month ));
-		$results = $this->con->exec("create view stats as select station_name,avg(max_tmp),avg(min_tmp),avg(avg_tmp) from daydata group by station_name;");
+		
 	}
 
 	public function findClosestStation($lat,$lon){
@@ -48,13 +52,15 @@ class mySQLDB{
 		$distance = 1000000000;
 		$arrayS = $result->fetchAll(PDO::FETCH_ASSOC);
 		foreach ($arrayS as $station) {
-			$thisDistance = (sqrt(pow($lat - $station['lat]']),2) + pow(($lon - $station['lon']),2));
+			$thisDistance = (sqrt(pow($lat - strval($station['lat]'])),2) + pow(($lon - strval($station['lon'])),2));
 			if($thisDistance < $distance){
 				$distance = $thisDistance;
 				$best = $station['name'];
 			}
 		}
+		var_dump($best);
 		return $best;
+
 	}
 
 	public function getStationAvgRainfall($station){ 
@@ -66,16 +72,42 @@ class mySQLDB{
 
 	// below .05 is iffy, above is a ok
 	public function getStats(){
-		$results = $this->con->exec("SELECT * FROM stats;");
+		$results = $this->con->prepare("SELECT * FROM stats;");
+		$results->execute();
 		return $results->fetchAll(PDO::FETCH_ASSOC);
+	}
+	public function getUniversalStats(){
+		$results = $this->con->prepare("SELECT AVG(  `avg(max_tmp)` ) , AVG(  `avg(min_tmp)` ) , AVG(  `avg(avg_tmp)` ) FROM  `stats`");
+		$results->execute();
+		return $results->fetch(PDO::FETCH_ASSOC);
 	}
 
 	public function cropQuality($lat,$lon){
 		$station = $this->findClosestStation($lat,$lon);
+		var_dump($station);
 		$avgRain = $this->getStationAvgRainfall($station);
 		$stats = $this->getStats();
-		print_r($stats);
-		echo 'asdasfas';
+		var_dump($stats);
+		foreach ($stats as $statToCompare) {
+			
+			if($statToCompare['station_name']==$station){
+				
+				//Use the ranges of the statistics to figure out the quality of the crops
+				//Between averages is ok, outside of max or min is bad, and close to the average is best
+				if($statToCompare['max_tmp'] > $this->uniStats['AVG( `avg(max_tmp)` )'] || $statToCompare['min_tmp'] < $this->uniStats["AVG( `avg(min_tmp)` )"]){
+					return "#402C12";
+				}else{
+					//We're in an ok zone. If we're more than 3 away from the average
+					if($statToCompare['avg(avg_tmp)'] > $this->uniStats['AVG( `avg(avg_tmp)` )']+3 || $statToCompare['avg(avg_tmp)'] < $this->uniStats['AVG( `avg(avg_tmp)` )']-3){
+						//They're alright:
+						return "#F2EE39";
+					}else{
+						//We are now in the sweet spot of precipitation!
+						return "#375903";
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -83,7 +115,6 @@ class mySQLDB{
 
 $w = new mySQLDB();
 $w->findClosestStation(50,36.3);
-var_dump($w->getStationAvgRainfall("BURLINGTON"));
 echo 'heeey hyeey</br >';
 
 var_dump($w->cropQuality(45.00,79.4));
