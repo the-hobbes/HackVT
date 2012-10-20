@@ -8,25 +8,35 @@
 
 		<!-- Mobile viewport optimized: h5bp.com/viewport -->
 		<meta name="viewport" content="width=device-width">
-		
+		<link href='http://fonts.googleapis.com/css?family=Carrois+Gothic' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="css/style.css">
 	</head>
 
 	<body>
-
 		<div class="container_12" style="background-color:red">  
 		    <div class="grid_2" style="background-color:yellow"><p>Logo</p></div><!-- end logo -->
-		    <div class="grid_10" style="background-color:blue"><p>Header</p></div><!-- end header -->
+		    <div class="grid_10" style="background-color:blue"><h1>Header</h1></div><!-- end header -->
 		    <div class="clear"></div>  
 		    <div class="grid_12" style="background-color:green"><p>Navigation</p></div><!-- end navigation -->
 		    <div class="grid_3" style="background-color:gray;">
+		    	
 		    	<div class="paddingFix">
+						
 						<div class="grid_3 alpha">
-				    		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris iaculis quam quis erat condimentum cursus. Nam vel mattis quam. Donec feugiat adipiscing lorem, ut bibendum libero ornare sed. Quisque interdum, orci eget tincidunt convallis, arcu ipsum blandit massa, vel malesuada augue ante vitae ligula. Donec volutpat congue tortor quis pharetra.
-					    </div>
+				    		<select id="categorySelector" name="foodCategory" multiple="multiple">
+							    <option>Meat</option>
+							    <option selected="selected">Vegetables</option>
+							    <option>Fruits</option>
+							    <option selected="selected">Dairy</option>
+							</select><!-- end foodCategory -->
+					    </div><!-- end food catagory selector div -->
+
 					    <div class="grid_3 alpha">
-				    		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris iaculis quam quis erat condimentum cursus. Nam vel mattis quam. Donec feugiat adipiscing lorem, ut bibendum libero ornare sed. Quisque interdum, orci eget tincidunt convallis, arcu ipsum blandit massa, vel malesuada augue ante vitae ligula. Donec volutpat congue tortor quis pharetra.
+					    	<select id="ingredientSelector" name="foodCategory" multiple="multiple">
+							    
+							</select><!-- end foodCategory -->
 					    </div>
+
 		    	</div><!-- end padding-fix -->
 
 </p></div><!-- end left-content -->  
@@ -48,10 +58,72 @@
 
 </p></div><!-- end right-content -->
 		    <div class="clear"></div>  
-		    <div class="grid_12" style="background-color:yellow"><p>three</p></div><!-- end right-content -->
+		    <div class="grid_12" style="background-color:yellow"><p>footer</p></div><!-- end right-content -->
 		</div><!--end container -->
 		<!-- JavaScript -->
-			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+			<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script><!--import jquery from google cdn-->
+			<script>
+				//display a list of ingredients based on food category selection
+				var ingredientSelector = function(str)
+				{
+					$('#ingredientSelector').empty(); //empty out the selector so only the desired elements show up
+
+					//set up ingredient arrays by category
+					var meats = new Array("Chicken", "Beef", "Lamb", "Veal", "Venison");
+					var vegetables = new Array("Corn", "Tomatoes", "Carrots", "Cabbage", "Lettuce", "Kale");
+					var fruits = new Array("Apples", "Raspberries", "Blueberries", "Strawberries");
+					var dairy = new Array("Cheese", "Milk", "Yogurt");
+
+					var targetCategories = Array(); //holder for the arrays of categories as determined by user selection
+					var ingredients_in = str.split(','); //explode based on ","
+
+					//loop through user-selected categories
+					for (var i = 0; i < ingredients_in.length; i++) 
+					{
+						//add array to targetCategories based on user selection
+    					switch(ingredients_in[i])
+    					{
+    						case 'Meat':
+    							targetCategories = targetCategories.concat(meats);
+	    						break; //end meat
+
+    						case 'Vegetables':
+    							targetCategories = targetCategories.concat(vegetables);
+    						break; //end vegetables
+
+    						case 'Fruits':
+    							targetCategories = targetCategories.concat(fruits);
+    						break; //end fruits
+
+    						case 'Dairy':
+    							targetCategories = targetCategories.concat(dairy);
+    						break; //end dairy
+    					}
+    				}
+					 
+    				//add ingredients from each category to selector
+    				for (var i = 0; i < targetCategories.length; i++)
+    				{
+    					$('#ingredientSelector').append($('<option>', { 
+    						value: i, 
+    						text : targetCategories[i] 
+    					}));
+    				}
+				}
+
+				//Function to determine which category of food you'd like to choose ingredients from 
+				$("#categorySelector").change(function () {
+		          var str = "";
+		          changed = false;
+
+		          $("select option:selected").each(function () {
+		                str += $(this).text() + ",";
+		              });
+		          ingredientSelector(str);
+		        })
+		        .trigger('change');
+
+			</script>
 		<!-- end JavaScript -->
 	</body>
 </html>

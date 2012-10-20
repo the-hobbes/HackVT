@@ -18,7 +18,12 @@
 
 body {
   min-width: 960px;
-  font: normal 100%/1.375 Helvetica, Arial, sans-serif;
+  font-family: 'Carrois Gothic', sans-serif;
+
+}
+
+h1 {
+  font-family: 'Carrois Gothic', sans-serif;
 }
 
 ul {
