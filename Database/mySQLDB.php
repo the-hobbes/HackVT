@@ -13,10 +13,10 @@ class mySQLDB{
 	}
 
 	public function inputWeather($wArray){
-		if(!is_null($this->con)){return;}
+		if(is_null($this->con)){return;}
 
 		//Run the query
-		$result = $this->link->prepare('INSERT INTO weather ("date", "maxHum","minHum","rain","snow","hail","precip","maxTemp","minTemp","avgTemp") VALUES (?, ?, ?, ?,?,?,?,?,?,?);');
+		$result = $this->con->prepare('INSERT INTO weather ("date", "maxHum","minHum","rain","snow","hail","precip","maxTemp","minTemp","avgTemp") VALUES (?, ?, ?, ?,?,?,?,?,?,?);');
 		$result->bindValue(1,$wArray['date'],PDO::PARAM_STR);
 		$result->bindValue(2,$wArray['maxHum'],PDO::PARAM_STR);
 		$result->bindValue(3,$wArray['minHum'],PDO::PARAM_STR);
@@ -27,10 +27,10 @@ class mySQLDB{
 		$result->bindValue(8,$wArray['maxTemp'],PDO::PARAM_STR);
 		$result->bindValue(9,$wArray['minTemp'],PDO::PARAM_STR);
 		$result->bindValue(10,$wArray['avgTemp'],PDO::PARAM_STR);
-		$result->execute();
+		var_dump($result->execute());
 
 	}
 }
 
-
+new mySQLDB();
 ?>

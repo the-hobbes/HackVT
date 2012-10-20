@@ -67,11 +67,11 @@ class weatherAPIInterface{
 			$weather['minTemp']= $dayData->mintempi;
 			$weather['avgTemp']= $dayData->meantempi;
 			
-			var_dump($weather);
+			print_r($weather);
 
 			$this->db->inputWeather($weather);
 			echo '<br /><br />';
-			break;
+			die('i died');
 		}
 	}
 
