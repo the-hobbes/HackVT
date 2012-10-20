@@ -7,35 +7,30 @@ class mySQLDB{
 	private $con = null;
 
 	public function __construct(){
-		$this->con =  @mysql_connect( DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD ) OR die ( 'Could not connect to MySQL: ' . mysql_error() );
-		@mysql_select_db( DATABASE_NAME ) OR die( 'Could not select the database: ' . mysql_error() );
-	}
-
-	public function close(){
-		mysql_close($this->con);
+		$this->con =  new PDO('mysql:host='.DATABASE_HOST.';dbname='.DATABASE_NAME,DATABASE_USER,DATABASE_PASS);
+		$this->con->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+		$this->con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	}
 
 	public function inputWeather($wArray){
-		if(!is_null($this->con)){return;}
+		if(is_null($this->con)){return;}
 
 		//Run the query
-		$result = mysql_query('INSERT INTO weather ("date", "maxHum","minHum","rain","snow","hail","precip","maxTemp","minTemp","avgTemp") '
-					.'VALUES ('."'". $wArray['date']. "'," 
-					. "'". $wArray['maxHum'] ."',"
-					. "'". $wArray['maxHum'] ."',"
-					. "'". $wArray['minHum'] ."',"
-					. "'". $wArray['rain'] ."'," 
-					. "'". $wArray['snow'] ."',"
-					. "'". $wArray['hail'] ."',"
-					. "'". $wArray['precip']."',"
-					. "'". $wArray['maxTemp']."',"
-					. "'". $wArray['minTemp']."',"
-					. "'". $wArray['avgTemp']."');");
-		
+		$result = $this->con->prepare("INSERT INTO weather (date, maxHum,minHum,rain,snow,hail,precip,maxTemp,minTemp,avgTemp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+		$result->bindValue(1,$wArray['date'],PDO::PARAM_STR);
+		$result->bindValue(2,$wArray['maxHum'],PDO::PARAM_STR);
+		$result->bindValue(3,$wArray['minHum'],PDO::PARAM_STR);
+		$result->bindValue(4,$wArray['rain'],PDO::PARAM_INT);
+		$result->bindValue(5,$wArray['snow'],PDO::PARAM_INT);
+		$result->bindValue(6,$wArray['hail'],PDO::PARAM_INT);
+		$result->bindValue(7,$wArray['precip'],PDO::PARAM_STR);
+		$result->bindValue(8,$wArray['maxTemp'],PDO::PARAM_STR);
+		$result->bindValue(9,$wArray['minTemp'],PDO::PARAM_STR);
+		$result->bindValue(10,$wArray['avgTemp'],PDO::PARAM_STR);
+		var_dump($result->execute());
 
 	}
 }
 
 new mySQLDB();
-
 ?>

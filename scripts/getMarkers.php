@@ -13,9 +13,9 @@
 	}
 
 	//$array_in = $_POST["selectedOptions"];
-	
+
 	$array_in = $_REQUEST['selectedOptions'];
-	
+
 	//lowercase all variables
 	for($i=0; $i<count($array_in); $i++)
 	{
@@ -79,7 +79,7 @@
 	// 	        break;
 	// 	}
 	// }
-		
+
 
 	function parseToXML($htmlStr) 
 	{ 
@@ -121,7 +121,7 @@
 			$categories .= " AND ";
 		$categories .= "`dairy`=1";
 	}
-	
+
 	$query .= $categories;
 	// echo $query;
 	$result = mysql_query($query);
@@ -149,6 +149,6 @@
 
 	// End XML file
 	echo '</markers>';
-	    
-	
+
+
 ?>
