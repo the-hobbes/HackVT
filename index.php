@@ -91,13 +91,8 @@
 		    </header>
 		    <div class="grid_3 wingContent" style="height:480px">
 		    	<div class="paddingFix">
-						
 						<div class="grid_3 alpha">
-<<<<<<< HEAD
-							<form name="input" action="scripts/getMarkers.php" method="post">
-=======
 							<form name="input" >
->>>>>>> fc106494ae78447ec5ae7ff9ef9b176b7701e0da
 					    		<select id="categorySelector" name="foodCategory[]" multiple="multiple">
 								    <option value="Meat">Meat</option>
 								    <option value="Vegetables">Vegetables</option>
@@ -105,25 +100,18 @@
 								    <option value="Eggs">Eggs</option>
 								    <option vaule="Dairy" selected="selected">Dairy</option>
 								</select><!-- end foodCategory -->
-<<<<<<< HEAD
-					    		<input name="submit" type="submit">
-=======
 				    		<!--<input id="submit" name="submit" type="submit">-->
->>>>>>> fc106494ae78447ec5ae7ff9ef9b176b7701e0da
 							</form>
 					    </div><!-- end food catagory selector div -->
-
 					    <div class="grid_3 alpha">
 					    	<select id="ingredientSelector" name="ingredientCategory" multiple="multiple"></select><!-- end foodCategory -->
 					    </div>
 					    <button type="button" onclick="collectResult()">Submit</button>
 		    	</div><!-- end padding-fix -->
 			</div><!-- end left-content -->  
-
 		    <div class="grid_6 wingContent">
 				<div id="map_canvas" style="width:460px; height:480px; "></div><!-- Google Map Canvas -->
 			</div><!-- end middle-content -->
-		    
 		    <div class="grid_3 wingContent" style="height:480px;">
 		    	<div class="paddingFix">
 			    	<div class="grid_3 alpha">
@@ -135,16 +123,13 @@
 		    		</div>
 			    </div><!-- end padding-fix -->
 			</div><!-- end right-content -->
-
 		    <div class="clear"></div>
-
 		    <footer class="footerstyle">
 			    <div class="grid_12">
 			    	<p>Dillan, Phelan, Garth, Ethan, Scott @ HackVT 2012</p>
 			    </div>
 			</footer>
 		</div><!--end 12 column container -->
-
 		<!-- JavaScript -->
 			<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script><!--import jquery from google-->
 			<script src="scripts/selectionTables.js"></script><!-- code to perform ingredient table selection -->
