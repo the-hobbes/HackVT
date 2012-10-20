@@ -57,3 +57,5 @@
 		          ingredientSelector(str);
 		        })
 		        .trigger('change');
+
+		        //$('#frame').attr('src', url)

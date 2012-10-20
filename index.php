@@ -155,7 +155,7 @@
 			</div><!-- end left-content -->  
 
 		    <div class="grid_6 wingContent">
-			    	<div id="map_canvas" style="width:460px; height:480px; "></div><!-- Google Map Canvas -->
+				<div id="map_canvas" style="width:460px; height:480px; "></div><!-- Google Map Canvas -->
 			</div><!-- end middle-content -->
 		    
 		    <div class="grid_3 wingContent" style="height:480px;">
