@@ -30,6 +30,14 @@ class mySQLDB{
 		$result->execute();
 
 	}
+
+	public function inputDay($station_name,$max_tmp,$min_tmp,$avg_tmp,$num,$rainfall,$year,$month){
+		if(is_null($this->con)){return;}
+
+		$result = $this->con->prepare("INSERT INTO daydata VALUES ( ?,?,?,?,?,?,?,?);");
+		$result->execute(array($station_name,$max_tmp,$min_tmp,$avg_tmp,$num,$rainfall,$year,$month ));
+
+	}
 }
 
 ?>

@@ -12,7 +12,7 @@ include_once('mySQLDB.php');
 
 class weatherAPIInterface{
 	private $db = null;
-	private $key = 'a8be19e4c204a4b0';
+	private $key = '025e610d25bff853';
 	private $state = 'VT';
 	private $cities = null;
 	public $apiRequests = 0;
@@ -52,7 +52,7 @@ class weatherAPIInterface{
 		//Initilization check.
 		$weather = array();
 		//SET THIS TO START DATA OF YOUR CHOOSING YYYY-MM-DD
-		$weather['date'] = "2012-01-02"; 
+		$weather['date'] = "2012-01-03"; 
 		if(is_null($this->cities)){return;}
 		for($i =0; $i < 71; $i++){
 			foreach ($this->cities as $city) {
