@@ -42,10 +42,22 @@
 	//remove trailing AND
 	$query = substr($query, 0, -5);
 
-	for($array_in as $element)
+	//cartesian product of all elements in the selections array
+	foreach ($array_in as $arr)
 	{
-		$query = $query . ;
+	    array_push($arr,null); // Add a null element to the array to get tuples with less than all arrays
+
+	    // This is the cartesian product:
+	    $new_result = array();
+	    foreach ($result as $old_element)
+
+	        foreach ($arr as $el)
+	            $new_result []= array_merge($old_element,array($el));
+
+	    $result = $new_result;
 	}
+
+	echo $result;
 
 	// foreach($array_in as $element)
 	// {
