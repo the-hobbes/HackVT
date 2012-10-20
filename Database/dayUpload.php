@@ -1,4 +1,6 @@
 <?php
+//This is a terrible terrible script to take a terrible piece of data(located in data.php) and make it better and into an sql database
+
 
 include('data.php');
 include('mySQLDB.php');

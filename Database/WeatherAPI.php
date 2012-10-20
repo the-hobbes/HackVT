@@ -8,13 +8,17 @@ This query will get us all of VT
 http://api.wunderground.com/api/a8be19e4c204a4b0/history_20100101/q/VT.json
 */
 
+//We need SQL to store the weather elements
 include_once('mySQLDB.php');
 
 class weatherAPIInterface{
+	//database connection
 	private $db = null;
+	//API Key
 	private $key = '025e610d25bff853';
 	private $state = 'VT';
 	private $cities = null;
+	//Number of api requests
 	public $apiRequests = 0;
 
 	public function __construct(){
@@ -23,6 +27,7 @@ class weatherAPIInterface{
 		$this->getWeather();
 	}
 
+	//Nice and modular for us, easy to keep track of apiRequests too since we're limited to 500 a day
 	public function curlOn($url){
 		$ch = curl_init($url);
 		//Set options, I want to fail silently if I get a 404 page because I can't parse that
@@ -89,7 +94,7 @@ class weatherAPIInterface{
 
 }
 
-
+//testing
 $wi = new weatherAPIInterface();
 
 ?>
