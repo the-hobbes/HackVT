@@ -10,12 +10,16 @@ http://api.wunderground.com/api/a8be19e4c204a4b0/history_20100101/q/VT.json
 
 class weatherAPIInterface{
 	private $key = 'a8be19e4c204a4b0';
+	private $state = 'VT';
+	private $cities = null;
 
-	public function __construct(){}
+	public function __construct(){
+		$this->getCities();
+	}
 
-	public getStateWide(){
+	public function getCities(){
 		//Start getting ready to ask for data (Refactor this to go through dates)
-		$ch = curl_init('http://api.wunderground.com/api/'.$this->key.'/history_20100101/q/VT.json');
+		$ch = curl_init('http://api.wunderground.com/api/'.$this->key.'/history_20100101/q/'.$this->state.'.json');
 		//Set options, I want to fail silently if I get a 404 page because I can't parse that
 		//             I want to follow anything I need to, and get the data as a string
 		curl_setopt($ch,CURLOPT_FAILONERROR,true);
@@ -26,8 +30,16 @@ class weatherAPIInterface{
 		//free up resources
 		curl_close($ch);
 
+		$this->cities = array();
+
+		foreach ($output->response->results as $key) {
+			$this->cities[] = ($key->city);
+		}
 	}
 
 }
+
+
+$wi = new weatherAPIInterface();
 
 ?>
