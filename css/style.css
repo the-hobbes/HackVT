@@ -131,6 +131,8 @@ nav ul li:hover .submenu li, nav ul li.focus .submenu li
 .paddingFix {
   padding-left:3px;
   padding-right:3px;
+body {
+  min-width: 960px; 
 }
 
 /* `Container
