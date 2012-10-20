@@ -112,8 +112,10 @@
 					    </div><!-- end food catagory selector div -->
 
 					    <div class="grid_3 alpha">
-					    	<select id="ingredientSelector" name="foodCategory" multiple="multiple">
-							</select><!-- end foodCategory -->
+					    	<form name="input" action="scripts/getMarkers.php" method="post">
+					    		<select id="ingredientSelector" name="foodCategory" multiple="multiple"></select><!-- end foodCategory -->
+					    		<input name="submit" type="submit" value="Submit">
+							</form>
 					    </div>
 
 		    	</div><!-- end padding-fix -->
