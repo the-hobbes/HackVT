@@ -40,7 +40,7 @@
     				for (var i = 0; i < targetCategories.length; i++)
     				{
     					$('#ingredientSelector').append($('<option>', { 
-    						value: i, 
+    						value: targetCategories[i], 
     						text : targetCategories[i] 
     					}));
     				}
