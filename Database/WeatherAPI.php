@@ -51,15 +51,15 @@ class weatherAPIInterface{
 			$data = json_decode($this->curlOn('http://api.wunderground.com/api/'.$this->key.'/history_20100101/q/'.$this->state.'/'.$city.'.json'));
 			$dayData = $data->history->dailysummary; $dayData = $dayData[0];
 			//Get the important things out of the query:
-			$weatherQuery.= " " +(string)($dayData->maxhumidity);
-			$weatherQuery.= " " +(string)($dayData->minhumidity);
-			$weatherQuery.= " " +(string)($dayData->rain);
-			$weatherQuery.= " " +(string)($dayData->snow);
-			$weatherQuery.= " " +(string)($dayData->hail);
-			$weatherQuery.= " " +(string)($dayData->precipi);
-			$weatherQuery.= " " +(string)($dayData->maxtempi);
-			$weatherQuery.= " " +(string)($dayData->mintempi);
-			$weatherQuery.= " " +(string)($dayData->meantempi);
+			$weatherQuery.= " " .strval($dayData->maxhumidity);
+			$weatherQuery.= " " .strval($dayData->minhumidity);
+			$weatherQuery.= " " .strval($dayData->rain);
+			$weatherQuery.= " " .strval($dayData->snow);
+			$weatherQuery.= " " .strval($dayData->hail);
+			$weatherQuery.= " " .strval($dayData->precipi);
+			$weatherQuery.= " " .strval($dayData->maxtempi);
+			$weatherQuery.= " " .strval($dayData->mintempi);
+			$weatherQuery.= " " .strval($dayData->meantempi);
 			echo $weatherQuery;
 			echo '<br /><br />';
 		}
