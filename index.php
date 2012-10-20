@@ -27,6 +27,15 @@
         <meta name="description" content="" />
         <meta name="keywords" content="HackVT, Hackathon, Collateral Damage, Recipe Farm, etc." />
 
+        <!--[if IE]>
+			<style>
+				#frame 
+				{
+	    			zoom: 0.2;
+				}
+			</style>
+		<[endif]-->
+
 		<link href='http://fonts.googleapis.com/css?family=Carrois+Gothic' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="css/style.css">
 		<!--google maps api-->
