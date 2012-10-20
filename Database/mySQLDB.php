@@ -38,6 +38,28 @@ class mySQLDB{
 		$result->execute(array($station_name,$max_tmp,$min_tmp,$avg_tmp,$num,$rainfall,$year,$month ));
 
 	}
+
+	public function findClosestStation($lat,$lon){
+		//Returns the name of station
+		$result = $this->con->prepare('select * from station;');
+		$result->execute();
+
+		$best = null;
+		$distance = 1000000000;
+		$arrayS = $result->fetchAll(PDO::FETCH_ASSOC);
+		foreach ($arrayS as $station) {
+			$thisDistance = (sqrt(pow($lat - $station['lat]']),2) + pow(($lon - $station['lon']),2));
+			if($thisDistance < $distance){
+				$distance = $thisDistance;
+				$best = $station['name'];
+			}
+		}
+		var_dump($best);
+	}
 }
+
+$w = new mySQLDB();
+$w->findClosestStation(50,36.3);
+echo 'heeey hyeey';
 
 ?>
