@@ -13,6 +13,21 @@
 	}
 
 ?>
+<?php
+	include("../../hackVTconf.php");
+	//connect to server
+	$link = mysql_connect($database, $username, $password);
+	if (!$link) {
+	    die('Not connected : ' . mysql_error());
+	}
+
+	//connect to database
+	$db_selected = mysql_select_db('PVENDEVI_HackVT', $link);
+	if (!$db_selected) {
+	    die ('Can\'t use foo : ' . mysql_error());
+	}
+
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -25,21 +40,13 @@
         <meta name="description" content="" />
         <meta name="keywords" content="HackVT, Hackathon, Collateral Damage, Recipe Farm, etc." />
 
-        <!--[if IE]>
-			<style>
-				#frame 
-				{
-	    			zoom: 0.2;
-				}
-			</style>
-		<[endif]-->
-
 		<link href='http://fonts.googleapis.com/css?family=Carrois+Gothic' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="css/style.css">
 		<!--google maps api-->
 		<script 
 			type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD6IjVeJmEWLaBdvZDNBbpj0WzbrWSxrp8&amp;sensor=true">
 		</script><!-- end google api map key -->
+		<script src="scripts/selectionTables.js"></script>
 		<script type="text/javascript">
 	      function initialize() {
 	        
@@ -54,48 +61,6 @@
 	        //make map
 			var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 
-			//call downloadurl and get all marker elements
-			downloadUrl("getMarkers.php", function(data) 
-			{
-				var markers = data.documentElement.getElementsByTagName("marker");
-				
-				//loop through the xml file and grab all the necessary information
-	      		for (var i = 0; i < markers.length; i++) 
-				{
-	        		var latlng = new google.maps.LatLng(parseFloat(markers[i].getAttribute("latitude")),
-			                                    parseFloat(markers[i].getAttribute("longitude")));
-			
-					var name = markers[i].getAttribute("name");
-					//var address = markers[i].getAttribute("address");
-			        var marker = new google.maps.Marker({position: latlng, map: map});
-			
-					var html = "<b>" + name + "</b> <br/>"; 	//+ address;
-					var infowindow_1 = new google.maps.InfoWindow({content: html});
-					
-					//create the marker on the map
-					createMarker(latlng, marker, infowindow_1);
-			    }
- 			});
-
-			//load object lets you retrieve a file that resides on the same domain as the requesting webpage
-			function downloadUrl(url,callback) 
-			{
-				var request = window.ActiveXObject ?
-				new ActiveXObject('Microsoft.XMLHTTP') :
-				new XMLHttpRequest;
-
-				request.onreadystatechange = function() 
-				{
-					if (request.readyState == 4) 
-					{
-					request.onreadystatechange = doNothing;
-					callback(request, request.status);
-					}
-			 	};
-
-				request.open('GET', url, true);
-				request.send(null);
-			}
 	      }
 	    </script><!-- end google maps initilizer -->
 	</head>
@@ -134,7 +99,7 @@
 		    	<div class="paddingFix">
 						
 						<div class="grid_3 alpha">
-							<form name="input" action="scripts/getMarkers.php" method="post">
+							<form name="input" >
 					    		<select id="categorySelector" name="foodCategory[]" multiple="multiple">
 								    <option value="Meat">Meat</option>
 								    <option value="Vegetables">Vegetables</option>
@@ -142,15 +107,14 @@
 								    <option value="Eggs">Eggs</option>
 								    <option vaule="Dairy" selected="selected">Dairy</option>
 								</select><!-- end foodCategory -->
-					    		<input name="submit" type="submit">
+				    		<!--<input id="submit" name="submit" type="submit">-->
 							</form>
-
 					    </div><!-- end food catagory selector div -->
 
 					    <div class="grid_3 alpha">
-					    	<select id="ingredientSelector" name="foodCategory" multiple="multiple"></select><!-- end foodCategory -->
+					    	<select id="ingredientSelector" name="ingredientCategory" multiple="multiple"></select><!-- end foodCategory -->
 					    </div>
-
+					    <button type="button" onclick="collectResult()">Submit</button>
 		    	</div><!-- end padding-fix -->
 			</div><!-- end left-content -->  
 
@@ -161,12 +125,11 @@
 		    <div class="grid_3 wingContent" style="height:480px;">
 		    	<div class="paddingFix">
 			    	<div class="grid_3 alpha">
-		    			<select id="recipeSelector" name="recipeSelected" size="3" onChange="alert(this.selectedIndex)">
-		    			</select>
-		    		</div>
-		    		<div class="grid_3 alpha">
-		    			<iframe id="frame" src="http://www.uvm.edu"></iframe>
-		    		</div>
+			    		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris iaculis quam quis erat condimentum cursus. Nam vel mattis quam. Donec feugiat adipiscing lorem, ut bibendum libero ornare sed. Quisque interdum, orci eget tincidunt convallis.
+				    </div>
+				    <div class="grid_3 alpha">
+			    		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris iaculis quam quis erat condimentum cursus. Nam vel mattis quam. Donec feugiat adipiscing lorem, ut bibendum libero ornare sed. Quisque interdum, orci eget tincidunt convallis.
+				    </div>
 			    </div><!-- end padding-fix -->
 			</div><!-- end right-content -->
 
@@ -182,6 +145,74 @@
 		<!-- JavaScript -->
 			<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script><!--import jquery from google-->
 			<script src="scripts/selectionTables.js"></script><!-- code to perform ingredient table selection -->
+			<script>
+				var passToPhp = function(selectedOptions) {
+		           jQuery.post("scripts/getMarkers.php", {selectedOptions : selectedOptions}, 
+					function(data)
+					{
+						alert(data);
+						//success function
+						var markers = data.documentElement.getElementsByTagName("marker");
+						
+						//loop through the xml file and grab all the necessary information
+			      		for (var i = 0; i < markers.length; i++) 
+						{
+			        		var latlng = new google.maps.LatLng(parseFloat(markers[i].getAttribute("latitude")),
+                            parseFloat(markers[i].getAttribute("longitude")));
+					
+							var name = markers[i].getAttribute("name");
+							//var address = markers[i].getAttribute("address");
+					        var marker = new google.maps.Marker({position: latlng, map: map});
+					
+							var html = "<b>" + name + "</b> <br/>"; 	//+ address;
+							var infowindow_1 = new google.maps.InfoWindow({content: html});
+							
+							//create the marker on the map
+							createMarker(latlng, marker, infowindow_1);
+					    }
+					})
+			    };
+
+				function collectResult()
+				{
+					var x=document.getElementById("ingredientSelector");
+					selectedOptions = new Array();
+
+					for (i=0;i<x.length;i++)
+					{
+						if (x.options[i].selected)
+							selectedOptions.push(x.options[i].text);
+					}
+					alert(selectedOptions);
+					passToPhp(selectedOptions);
+				}
+
+				//create marker
+				function createMarker(latlng, marker, infowindow_1)
+				{
+					//add the click event listener
+					google.maps.event.addListener(marker, 'click', function() 
+					{	
+						//logic to keep only one infomation window open at a time and center on the marker clicked
+						if(previousBool == true)
+						{
+							previousMarker.close();
+							previousMarker = infowindow_1;
+							infowindow_1.open(map,marker);
+							previousBool = true;
+							map.setCenter(latlng);
+						}
+						else
+						{
+							infowindow_1.open(map,marker);
+							previousMarker = infowindow_1;
+							previousBool = true;
+							map.setCenter(latlng);
+						}
+						
+					});
+				}
+			</script>
 		<!-- end JavaScript -->
 	</body>
 </html>
