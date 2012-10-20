@@ -12,34 +12,61 @@
 	    die ('Can\'t use foo : ' . mysql_error());
 	}
 
-	$array_in = $_POST["foodCategory"];
+	//$array_in = $_POST["selectedOptions"];
+	
+	$array_in = $_REQUEST['selectedOptions'];
+	
+	//lowercase all variables
+	for($i=0; $i<count($array_in); $i++)
+	{
+		$array_in[$i] = strtolower($array_in[$i]);
+		echo $array_in[$i];
+	}
 
-	/*
+	$join = " JOIN ";= 
+	//build basic query
+	$query = "SELECT DISTINCT name,latitude,longitude FROM `new_farms`";
+	// ON (`new_farms`.id = `raspberries`.farm_id 
+
 	foreach($array_in as $element)
 	{
-		echo $element." ";
+		$query = $query . $join . $element;
 	}
-	*/
+
+	$query = $query . " ON ( ";
+
 	foreach($array_in as $element)
 	{
-		switch ($element) {
-		    case "Meat":
-		        $meat = true;
-		        break;
-		    case "Vegetables":
-		        $vegetables = true;
-		        break;
-		    case "Fruits":
-		        $fruits = true;
-		        break;
-		    case "Eggs":
-		        $eggs = true;
-		        break;
-		    case "Dairy":
-		        $dairy = true;
-		        break;
-		}
+		$query = $query . "`new_farms`.id = ". $element .".farm_id" ." AND ";
 	}
+	//remove trailing AND
+	$query = substr($query, 0, -5);
+
+	for($array_in as $element)
+	{
+		$query = $query . ;
+	}
+
+	// foreach($array_in as $element)
+	// {
+	// 	switch ($element) {
+	// 	    case "Meat":
+	// 	        $meat = true;
+	// 	        break;
+	// 	    case "Vegetables":
+	// 	        $vegetables = true;
+	// 	        break;
+	// 	    case "Fruits":
+	// 	        $fruits = true;
+	// 	        break;
+	// 	    case "Eggs":
+	// 	        $eggs = true;
+	// 	        break;
+	// 	    case "Dairy":
+	// 	        $dairy = true;
+	// 	        break;
+	// 	}
+	// }
 		
 
 	function parseToXML($htmlStr) 
@@ -91,12 +118,6 @@
 	{
 	  die('Invalid query: ' . mysql_error());
 	}
-
-	// while($row = mysql_fetch_row($result))
-	// {
-	// 	$count = $row[0];
-	//     echo $count;
-	// }
 
 	header("Content-type: text/xml");
 
