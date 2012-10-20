@@ -245,6 +245,18 @@ nav ul li:hover .submenu li, nav ul li.focus .submenu li
   background-color:#FFFFFF;
 }
 
+#frame {
+    width: 800px;
+    height: 520px;
+    border: none;
+    -moz-transform: scale(0.2);
+    -moz-transform-origin: 0 0;
+    -o-transform: scale(0.2);
+    -o-transform-origin: 0 0;
+    -webkit-transform: scale(0.2);
+    -webkit-transform-origin: 0 0;
+}
+
 /* `Padding Fix
 ----------------------------------------------------------------------------------------------------*/
 .paddingFix {
