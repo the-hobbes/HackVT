@@ -105,12 +105,20 @@
 		    
 		    <div class="grid_3 wingContent" style="height:480px;">
 		    	<div class="paddingFix">
-			    	<div class="grid_3 alpha">
+		    		<div class="grid_3 alpha">
+		    			<select id="recipeSelector" name="recipeSelected">
+		    			</select>
+		    		</div>
+		    		<div class="grid_3 alpha">
+		    			<iframe id="frame" src="http://www.google.com">
+		    			</iframe>
+		    		</div>
+			    	<!--<div class="grid_3 alpha">
 			    		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris iaculis quam quis erat condimentum cursus. Nam vel mattis quam. Donec feugiat adipiscing lorem, ut bibendum libero ornare sed. Quisque interdum, orci eget tincidunt convallis.
 				    </div>
 				    <div class="grid_3 alpha">
 			    		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris iaculis quam quis erat condimentum cursus. Nam vel mattis quam. Donec feugiat adipiscing lorem, ut bibendum libero ornare sed. Quisque interdum, orci eget tincidunt convallis.
-				    </div>
+				    </div>-->
 			    </div><!-- end padding-fix -->
 			</div><!-- end right-content -->
 
@@ -126,6 +134,13 @@
 		<!-- JavaScript -->
 			<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script><!--import jquery from google-->
 			<script src="scripts/selectionTables.js"></script><!-- code to perform ingredient table selection -->
+			<script type="text/javascript" src="shadowbox-3.0.3/shadowbox.js"></script>
+			<script type="text/javascript">
+				Shadowbox.init(/*{
+					handleOversize: "drag",
+					modal: true
+				}*/);
+			</script>
 		<!-- end JavaScript -->
 	</body>
 </html>

@@ -245,6 +245,24 @@ nav ul li:hover .submenu li, nav ul li.focus .submenu li
   background-color:#FFFFFF;
 }
 
+#recipeSelector 
+{
+  width: 95%;
+  font: 0.875em;
+  height: 350px;
+  margin: 10px 2px 2px 2px;
+}
+
+#recipeSelector > option:nth-child(odd) 
+{
+  background-color:#EEEEEE;
+}
+
+#recipeSelector > option:nth-child(even)
+{
+  background-color:#FFFFFF;
+}
+
 #frame {
     width: 800px;
     height: 520px;
