@@ -113,6 +113,8 @@ class FarmLocations{
 		return $locations;
 	}
 
+
+	//Set all the parameters to the individual farms then add them to the database, checking to see if they exist in there first
 	public function insert_db(){
 		if(is_null($this->farmsAll)){
 			$this->farmsAll = $this->getFarms();
@@ -180,28 +182,26 @@ class FarmLocations{
 		$this->dsn = "mysql:dbname=".$this->dbName.";host=".$this->host;
 		$this->dbConnect();
 		foreach($this->farmsAll as $farm){
-			if(is_null($this->con)){
-				$this->dbConnect();
+			if(!$this->farmExists($farm['name'])){
+				$data = array(
+					$farm['name'],
+					$farm['address'],
+					$farm['latitude'],
+					$farm['longitude'],
+					$farm['vegetables'],
+					$farm['fruits'],
+					$farm['meat'],
+					$farm['dairy'],
+					$farm['eggs'],
+					$farm['pickYourOwn']);
+				$db_query = 'INSERT INTO '.$this->tableName.' (name, address, latitude, longitude, vegetables, fruits, meat, dairy, eggs, pickYourOwn) VALUES (?,?,?,?,?,?,?,?,?,?)';
+				$insertStmt = $this->con->prepare($db_query);
+				$insertStmt->execute($data);
+				if($insertStmt == false){
+					echo 'Error inserting into table';
+				}
 			}
-			//var_dump($farm);
-			//echo count($farm);
-			$data = array(
-				$farm['name'],
-				$farm['address'],
-				$farm['latitude'],
-				$farm['longitude'],
-				$farm['vegetables'],
-				$farm['fruits'],
-				$farm['meat'],
-				$farm['dairy'],
-				$farm['eggs'],
-				$farm['pickYourOwn']);
-			$db_query = 'INSERT INTO '.$this->tableName.' (name, address, latitude, longitude, vegetables, fruits, meat, dairy, eggs, pickYourOwn) VALUES (?,?,?,?,?,?,?,?,?,?)';
-			$insertStmt = $this->con->prepare($db_query);
-			$insertStmt->execute($data);
 		}
-		return true;
-
 	}
 
 	function dbConnect(){
@@ -212,6 +212,18 @@ class FarmLocations{
 			$this->con->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 			*/
 		}catch(PDOException $err){$this->error = true;}
+	}
+
+	function farmExists($name){
+		$exists= false;
+		$existsQuery = 'SELECT * FROM '.$this->tableName.' WHERE name='.$name;
+		$existsStatement = $this->con->prepare($existsQuery);
+		$existsStatement ->execute();
+		$tweet_id = $existsStatement ->fetchall();
+		if(count($tweet_id)!=0){
+			$exists = true;
+		}
+		return $exists;
 	}
 }
 ?>
