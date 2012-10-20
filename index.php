@@ -1,6 +1,4 @@
 <?php
-	header('X-Frame-Options: GOFORIT'); 
-
 	include("../../hackVTconf.php");
 	//connect to server
 	$link = mysql_connect($database, $username, $password);
@@ -163,12 +161,11 @@
 		    <div class="grid_3 wingContent" style="height:480px;">
 		    	<div class="paddingFix">
 			    	<div class="grid_3 alpha">
-		    			<select id="recipeSelector" name="recipeSelected">
+		    			<select id="recipeSelector" name="recipeSelected" size="3" onChange="alert(this.selectedIndex)">
 		    			</select>
 		    		</div>
 		    		<div class="grid_3 alpha">
-		    			<iframe id="frame" src="http://www.google.com">
-		    			</iframe>
+		    			<iframe id="frame" src="http://www.uvm.edu"></iframe>
 		    		</div>
 			    </div><!-- end padding-fix -->
 			</div><!-- end right-content -->
