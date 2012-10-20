@@ -20,19 +20,19 @@
     					{
     						case 'Meat':
     							targetCategories = targetCategories.concat(meats);
-	    						break; //end meat
+	    						//break; //end meat
 
     						case 'Vegetables':
     							targetCategories = targetCategories.concat(vegetables);
-    						break; //end vegetables
+    							//break; //end vegetables
 
     						case 'Fruits':
     							targetCategories = targetCategories.concat(fruits);
-    						break; //end fruits
+    							//break; //end fruits
 
     						case 'Dairy':
     							targetCategories = targetCategories.concat(dairy);
-    						break; //end dairy
+    							//break; //end dairy
     					}
     				}
 					 
