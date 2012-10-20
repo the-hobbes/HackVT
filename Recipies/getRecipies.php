@@ -24,7 +24,7 @@ class GetRecipies{
 		curl_setopt($curl_site, CURLOPT_URL, $url);
 		curl_setopt($curl_site, CURLOPT_RETURNTRANSFER, 1); 
 		$output= curl_exec($curl_site);
-		var_dump(json_decode($output)->results);
+		return json_decode($output)->results;
 	}
 }
 

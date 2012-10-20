@@ -116,6 +116,8 @@ class FarmLocations{
 
 	//Set all the parameters to the individual farms then add them to the database, checking to see if they exist in there first
 	public function insert_db(){
+
+		//function no longer needed see FarmersMarketLocations
 		if(is_null($this->farmsAll)){
 			$this->farmsAll = $this->getFarms();
 		}		

@@ -17,16 +17,19 @@ class FarmersMarketLocations{
 		$this->dsn = "mysql:dbname=".$this->dbName.";host=".$this->host;
 	}
 
+	//grabs all farm ID's from http://www.vermontgrowersguide.com/ to use in later processing
 	public function getAllFarmID(){
 		$url = 'http://www.vermontgrowersguide.com/';
+		//set up the curl
 		$curl_site = curl_init();
 		curl_setopt($curl_site, CURLOPT_URL, $url);
 		curl_setopt($curl_site, CURLOPT_RETURNTRANSFER, 1); 
 		$output= curl_exec($curl_site);
+
+		//parse the needed data out
 		$initial = explode('<select name="pid">', $output);
 		$location_setup = explode('</select>', $initial[1], 2);
 		$locations = explode('</option><option value=',$location_setup[0]);
-		//$farmers_markets= array_merge($markets, $markets_weird);
 		$first_location = trim($locations[0]);
 		$locations[0] = ltrim($first_location, '<option value=');
 		$last = count($locations);
@@ -38,16 +41,11 @@ class FarmersMarketLocations{
 			$farms[$i]= array(ltrim($pid[0],'"'),$pid[1]);
 			$i=$i+1;
 		}
-		$current_farms;
 		
-		for($i=0;$i<10;$i++){
-			$vegetables = $this->getFarmVegetables($farms[$i][0]);
-			var_dump($vegetables);
-		}
-		/*
+		//insert these farm attributs into the database
 		$this->dsn = "mysql:dbname=".$this->dbName.";host=".$this->host;
 		$this->dbConnect();
-		foreach($current_farms as $farm){
+		foreach($farms as $farm){
 			if(!$this->farmExists($farm['id'])){
 				$data = array(
 					$farm['id'],
@@ -61,12 +59,11 @@ class FarmersMarketLocations{
 					echo 'Error inserting into table';
 				}
 			}
-		}
-		var_dump($current_farms);
-		*/
+		}		
 	}
 
-	function dbConnect(){
+	//connect to the db
+	private function dbConnect(){
 		try{
 			$this->con = new PDO($this->dsn, $this->user, $this->dbPass);
 			/*
@@ -76,7 +73,8 @@ class FarmersMarketLocations{
 		}catch(PDOException $err){$this->error = true;}
 	}
 
-	function farmExists($id){
+	//check to see if a farm already has a table entry 
+	private function farmExists($id){
 		$exists= false;
 		$existsQuery = 'SELECT * FROM '.$this->tableName.' WHERE id='.$id;
 		$existsStatement = $this->con->prepare($existsQuery);
@@ -88,7 +86,9 @@ class FarmersMarketLocations{
 		return $exists;
 	}
 
-	function selectFarmId(){
+
+	//select  all farm ids from the table
+	private function selectFarmId(){
 		if(is_null($this->con)){
 			$this->dbconnect();
 		}
@@ -101,6 +101,10 @@ class FarmersMarketLocations{
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//All these functions contain very specific html parsing for the farm pages on www.vermontgrowersguide.com/
+
+	//parse out the vegetables each farm carries
+	//all the code is very specific for the current page
+	//it could easily change in the future and everything could fall apart
 	private function getFarmVegetables($farmId){
 		$url=$this->url_head.$farmId.$this->url_tail;
 		$curl_site = curl_init();
@@ -136,12 +140,14 @@ class FarmersMarketLocations{
 		return($foods);
 	}
 
+	//parse out the geo code for use with google maps api
 	private function getFarmGeo($farmId){
 		$url=$this->url_head.$farmId.$this->url_tail;
 		$curl_site = curl_init();
 		curl_setopt($curl_site, CURLOPT_URL, $url);
 		curl_setopt($curl_site, CURLOPT_RETURNTRANSFER, 1); 
 		$output= curl_exec($curl_site);
+		//huge out amount of temp variables......my b
 		$split = explode('ll=', $output);
 		if(count($split)>1){
 			$geo=explode('&spn=', $split[1],3);
@@ -168,16 +174,24 @@ class FarmersMarketLocations{
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+	//construct all of the produce tables, curl will usually time out after many accesses, I don't 
+	//think that www.vermontgrowersguide.com/results likes me very much
 	public function insertVegetables(){
 		if(is_null($this->con)){
 			$this->dbconnect();
 		}
 		$farm_id = $this->selectFarmId();
-		for($i=220;$i<240;$i++){
+
+		//had to limit these loops so that timeouts wouldn't occur,
+		//would also be nice to check that the entry doesn't exist in the table
+		//before it is attempted to be inserted, otherwise duplicates occur
+		for($i=220;$i<239;$i++){
 			var_dump($farm_id[$i]['Id']);
 			$vegetables = $this->getFarmVegetables($farm_id[$i]['Id']);
 			var_dump($vegetables);
 			foreach ($vegetables as $vegetable) {
+				//case statements to put all the produce in the correct table
 				switch ($vegetable) {
 					case 'Chicken':
 						$db_query = 'INSERT INTO chicken (farm_id) VALUES (?)';
