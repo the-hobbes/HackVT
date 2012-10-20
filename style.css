@@ -1,9 +1,101 @@
 body
 {
+	margin: 0;
+	padding: 0;
 	background: #BEBF93;
 }
 
 nav
+{
+	font: 2em;
+	background: #E3E3E3;
+	background: -moz-linear-gradient(#F5F5F5, #E3E3E3);
+	background: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0, #F5F5F5), color-stop(0.98, #E3E3E3), color-stop(1, #FFFFFF));
+}
+
+nav ul li
+{
+	position: relative;
+	display: inline-block;
+	vertical-align: top;
+	border-right: 1px solid #EEEEEE;
+	/* For IE6/7 */ 
+	*display: inline;
+	zoom: 1.5;
+}
+
+nav a 
+{
+	display: block;
+	padding: 0px 10px;
+	color: #000000;
+	text-decoration: none;
+}
+
+nav a:hover, #nav a:focus
+{
+	background: #EEEEEE;
+}
+
+nav ul a 
+{
+	display: block;
+	padding: 5px 10px;
+	border-right: 1px solid #CCCCCC;
+	background: none;
+	text-decoration: none;
+}
+
+nav ul a:hover, nav ul a:focus
+{
+	text-decoration: underline;
+}
+
+.submenu
+{
+	position: absolute;
+	left: -2px;
+	z-index: 0;
+	opacity: 0;
+	filter:alpha(opacity=0);
+	white-space: nowrap;
+	background: #FFFFFF;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-moz-border-radius: 0 0 5px 5px;
+	-webkit-border-radius: 0 0 5px 5px;
+	border-radius: 0 0 5px 5px;
+	-webkit-border-bottom-left-radius: 5px; /* For Chrome */
+	-webkit-border-bottom-right-radius: 5px; /* For Chrome */
+	border: 2px solid #EEEEEE;
+	border-top: 1px solid #CCCCCC;
+}
+
+.submenu li
+{
+	height: 0;
+	line-height: 15px;
+	background: #FFFFFF;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+nav ul li:hover .submenu, nav ul li.focus .submenu
+{
+	z-index: 10;
+	opacity: 1;
+	filter: alpha(opacity=100);
+}
+
+nav ul li:hover .submenu li, nav ul li.focus .submenu li
+{
+	height: 25px;
+}
+
+
+/*nav
 {
 	font: 2em;
 	background: ;
@@ -15,8 +107,7 @@ nav li
 	position: relative;
 	display: inline-block;
 	vertical-align: top;
-	border-right: 2px solid #000000;
-	/* *display: inline */
+	border-right: 2px solid #733C0D;
 	zoom: 1;
 }
 
@@ -24,18 +115,18 @@ nav a
 {
 	display: block;
 	padding: 0 10px;
-	color: #000000;
+	color: #2E4013;
 	text-decoration: none;
 }
 
 nav a:hover, nav a:focus
 {
 	background: #2E4013;
-	color: #FFFFFF;
+	color: #BEBF93;
 }
 
 nav ul li ul li
 {
 	position: absolute;
 	right: 3px; 
-}
+}*/
