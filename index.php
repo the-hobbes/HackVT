@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>HackVT</title>
+		<title>HackVT: Collateral Damage - Recipe Farm</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<!-- Mobile viewport optimized: h5bp.com/viewport -->
 		<meta name="viewport" content="width=device-width">
         <meta name="author" content="Dillan, Phelan, Garth, Scott, Ethan." />
         <meta name="description" content="" />
-        <meta name="keywords" content="HackVT, Hackathon, etc." />
+        <meta name="keywords" content="HackVT, Hackathon, Collateral Damage, Recipe Farm, etc." />
 
         <link rel="stylesheet" href="style.css" type="text/css" media="screen">
 	</head>
@@ -31,7 +31,7 @@
 							<li><a href="link6.php">Link 6</a></li>
 						</ul>
 					</li>
-					<li><a href="link3.php"></a></li>
+					<li><a href="link3.php">Link 3</a></li>
 				</ul>
 			</nav>
 		</header>
