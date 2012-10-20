@@ -16,7 +16,7 @@ class mySQLDB{
 		if(is_null($this->con)){return;}
 
 		//Run the query
-		$result = $this->con->prepare('INSERT INTO weather ("date", "maxHum","minHum","rain","snow","hail","precip","maxTemp","minTemp","avgTemp") VALUES (?, ?, ?, ?,?,?,?,?,?,?);');
+		$result = $this->con->prepare("INSERT INTO weather (date, maxHum,minHum,rain,snow,hail,precip,maxTemp,minTemp,avgTemp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 		$result->bindValue(1,$wArray['date'],PDO::PARAM_STR);
 		$result->bindValue(2,$wArray['maxHum'],PDO::PARAM_STR);
 		$result->bindValue(3,$wArray['minHum'],PDO::PARAM_STR);
