@@ -18,7 +18,7 @@
 
 body {
   min-width: 960px;
-  font-family: 'Carrois Gothic', sans-serif;
+  font: normal 100%/1.375 Helvetica, Arial, sans-serif; /* 22px / 16px = 1.375 */
   background-image: url('../images/background.jpg');
   background-color: rgba(33, 64, 2, 1);
    -webkit-background-size: cover;
@@ -29,7 +29,10 @@ body {
 }
 
 h1 {
-  font-family: 'Carrois Gothic', sans-serif;
+  font-family: Georgia, serif;
+  font-size: 1.5em;
+  line-height: 0.91667em; /* 22px / 24px = 0.91667em */
+  margin: 0.5em 0;
 }
 
 ul {
