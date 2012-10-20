@@ -168,7 +168,7 @@
 						if (x.options[i].selected)
 							selectedOptions.push(x.options[i].text);
 					}
-					alert(selectedOptions);
+					//alert(selectedOptions);
 					passToPhp(selectedOptions);
 				}
 
