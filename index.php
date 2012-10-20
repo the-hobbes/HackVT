@@ -27,6 +27,7 @@
 
 		<link href='http://fonts.googleapis.com/css?family=Carrois+Gothic' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="css/style.css">
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script><!--import jquery from google-->
 		<!--google maps api-->
 		<script 
 			type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD6IjVeJmEWLaBdvZDNBbpj0WzbrWSxrp8&amp;sensor=true">
@@ -36,7 +37,7 @@
 	      function initialize() {
 	        
 	        //default map options
-        	var myOptions = 
+        	myOptions = 
 			{
 	          center: new google.maps.LatLng(43.80599, -72.729492),
 	          zoom: 7,
@@ -44,8 +45,7 @@
 	        };
 
 	        //make map
-			var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-
+			map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 	      }
 	    </script><!-- end google maps initilizer -->
 	</head>
@@ -85,7 +85,7 @@
 						
 						<div class="grid_3 alpha">
 							<form name="input" >
-					    		<select id="categorySelector" name="foodCategory[]" multiple="multiple">
+					    		<select id="categorySelector" name="foodCategory" multiple="multiple">
 								    <option value="Meat">Meat</option>
 								    <option value="Vegetables">Vegetables</option>
 								    <option value="Fruits">Fruits</option>
@@ -128,35 +128,41 @@
 		</div><!--end 12 column container -->
 
 		<!-- JavaScript -->
-			<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script><!--import jquery from google-->
 			<script src="scripts/selectionTables.js"></script><!-- code to perform ingredient table selection -->
 			<script>
 				var passToPhp = function(selectedOptions) {
 		           jQuery.post("scripts/getMarkers.php", {selectedOptions : selectedOptions}, 
 					function(data)
 					{
-						alert(data);
+						initialize();
+						//alert(data);
+
 						//success function
-						var markers = data.documentElement.getElementsByTagName("marker");
+						var markers = data.getElementsByTagName("marker");
 						
+						//alert(markers);
+
 						//loop through the xml file and grab all the necessary information
 			      		for (var i = 0; i < markers.length; i++) 
 						{
-			        		var latlng = new google.maps.LatLng(parseFloat(markers[i].getAttribute("latitude")),
-                            parseFloat(markers[i].getAttribute("longitude")));
-					
+			        		var latlng = new google.maps.LatLng(parseFloat(markers[i].getAttribute("lat")),
+                            parseFloat(markers[i].getAttribute("lng")));
+							//alert(latlng);
 							var name = markers[i].getAttribute("name");
 							//var address = markers[i].getAttribute("address");
 					        var marker = new google.maps.Marker({position: latlng, map: map});
 					
 							var html = "<b>" + name + "</b> <br/>"; 	//+ address;
-							var infowindow_1 = new google.maps.InfoWindow({content: html});
-							
+							var infowindow_1 = new google.maps.InfoWindow({content: name});
+							//alert(infowindow_1);
 							//create the marker on the map
 							createMarker(latlng, marker, infowindow_1);
 					    }
 					})
 			    };
+
+			    var previousBool = false;
+			    var previousMarker = "";
 
 				function collectResult()
 				{

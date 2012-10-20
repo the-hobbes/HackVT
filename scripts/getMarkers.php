@@ -20,7 +20,7 @@
 	for($i=0; $i<count($array_in); $i++)
 	{
 		$array_in[$i] = strtolower($array_in[$i]);
-		echo $array_in[$i];
+		//echo $array_in[$i];
 	}
 
 	$join = " JOIN "; 
@@ -80,30 +80,7 @@
 	#closing ) !!!
 	$query .= ')';
 
-	echo $query;
-
-/*
-	// foreach($array_in as $element)
-	// {
-	// 	switch ($element) {
-	// 	    case "Meat":
-	// 	        $meat = true;
-	// 	        break;
-	// 	    case "Vegetables":
-	// 	        $vegetables = true;
-	// 	        break;
-	// 	    case "Fruits":
-	// 	        $fruits = true;
-	// 	        break;
-	// 	    case "Eggs":
-	// 	        $eggs = true;
-	// 	        break;
-	// 	    case "Dairy":
-	// 	        $dairy = true;
-	// 	        break;
-	// 	}
-	// }
-		
+	//echo $query;		
 
 	function parseToXML($htmlStr) 
 	{ 
@@ -115,38 +92,6 @@
 		return $xmlStr; 
 	} 
 
-	// Select all the rows in the farms table
-	$query = "SELECT * FROM farms WHERE ";
-	$categories;
-
-	if($meat)
-		$categories .= "`meat`=1";
-	if($vegetables)
-	{
-		if($categories != "")
-			$categories .= " AND ";
-		$categories .= "`vegetables`=1";
-	}
-	if($fruits)
-	{
-		if($categories != "")
-			$categories .= " AND ";
-		$categories .= "`fruits`=1";
-	}
-	if($eggs)
-	{
-		if($categories != "")
-			$categories .= " AND ";
-		$categories .= "`eggs`=1";
-	}
-	if($dairy)
-	{
-		if($categories != "")
-			$categories .= " AND ";
-		$categories .= "`dairy`=1";
-	}
-	
-	$query .= $categories;
 	// echo $query;
 	$result = mysql_query($query);
 
@@ -154,6 +99,7 @@
 	{
 	  die('Invalid query: ' . mysql_error());
 	}
+	//var_dump($result);
 
 	header("Content-type: text/xml");
 
@@ -165,14 +111,11 @@
 	  // ADD TO XML DOCUMENT NODE
 	  echo '<marker ';
 	  echo 'name="' . parseToXML($row['name']) . '" ';
-	  echo 'address="' . parseToXML($row['address']) . '" ';
 	  echo 'lat="' . $row['latitude'] . '" ';
 	  echo 'lng="' . $row['longitude'] . '" ';
 	  echo '/>';
 	}
 
 	// End XML file
-	echo '</markers>';
-	    
-*/
+	echo '</markers>';	    
 ?>
