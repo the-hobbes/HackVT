@@ -1,4 +1,6 @@
 <?php
+	header('X-Frame-Options: GOFORIT'); 
+
 	include("../../hackVTconf.php");
 	//connect to server
 	$link = mysql_connect($database, $username, $password);
@@ -126,14 +128,14 @@
 						
 						<div class="grid_3 alpha">
 							<form name="input" action="scripts/getMarkers.php" method="post">
-				    		<select id="categorySelector" name="foodCategory[]" multiple="multiple">
-							    <option value="Meat">Meat</option>
-							    <option value="Vegetables">Vegetables</option>
-							    <option value="Fruits">Fruits</option>
-							    <option value="Eggs">Eggs</option>
-							    <option vaule="Dairy" selected="selected">Dairy</option>
-							</select><!-- end foodCategory -->
-				    		<input name="submit" type="submit">
+					    		<select id="categorySelector" name="foodCategory[]" multiple="multiple">
+								    <option value="Meat">Meat</option>
+								    <option value="Vegetables">Vegetables</option>
+								    <option value="Fruits">Fruits</option>
+								    <option value="Eggs">Eggs</option>
+								    <option vaule="Dairy" selected="selected">Dairy</option>
+								</select><!-- end foodCategory -->
+					    		<input name="submit" type="submit">
 							</form>
 
 					    </div><!-- end food catagory selector div -->
@@ -152,11 +154,13 @@
 		    <div class="grid_3 wingContent" style="height:480px;">
 		    	<div class="paddingFix">
 			    	<div class="grid_3 alpha">
-			    		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris iaculis quam quis erat condimentum cursus. Nam vel mattis quam. Donec feugiat adipiscing lorem, ut bibendum libero ornare sed. Quisque interdum, orci eget tincidunt convallis.
-				    </div>
-				    <div class="grid_3 alpha">
-			    		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris iaculis quam quis erat condimentum cursus. Nam vel mattis quam. Donec feugiat adipiscing lorem, ut bibendum libero ornare sed. Quisque interdum, orci eget tincidunt convallis.
-				    </div>
+		    			<select id="recipeSelector" name="recipeSelected">
+		    			</select>
+		    		</div>
+		    		<div class="grid_3 alpha">
+		    			<iframe id="frame" src="http://www.google.com">
+		    			</iframe>
+		    		</div>
 			    </div><!-- end padding-fix -->
 			</div><!-- end right-content -->
 
