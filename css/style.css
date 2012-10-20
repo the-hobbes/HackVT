@@ -407,18 +407,15 @@ nav ul li:hover .submenu li, nav ul li.focus .submenu li
 /* `Prefix Extra Space >> Global
 ----------------------------------------------------------------------------------------------------*/
 
-.container_12 .prefix_3,
-.container_16 .prefix_4 {
+.container_12 .prefix_3 {
   padding-left: 240px;
 }
 
-.container_12 .prefix_6,
-.container_16 .prefix_8 {
+.container_12 .prefix_6 {
   padding-left: 480px;
 }
 
-.container_12 .prefix_9,
-.container_16 .prefix_12 {
+.container_12 .prefix_9 {
   padding-left: 720px;
 }
 
@@ -460,18 +457,15 @@ nav ul li:hover .submenu li, nav ul li.focus .submenu li
 /* `Suffix Extra Space >> Global
 ----------------------------------------------------------------------------------------------------*/
 
-.container_12 .suffix_3,
-.container_16 .suffix_4 {
+.container_12 .suffix_3 {
   padding-right: 240px;
 }
 
-.container_12 .suffix_6,
-.container_16 .suffix_8 {
+.container_12 .suffix_6 {
   padding-right: 480px;
 }
 
-.container_12 .suffix_9,
-.container_16 .suffix_12 {
+.container_12 .suffix_9 {
   padding-right: 720px;
 }
 
@@ -513,18 +507,15 @@ nav ul li:hover .submenu li, nav ul li.focus .submenu li
 /* `Push Space >> Global
 ----------------------------------------------------------------------------------------------------*/
 
-.container_12 .push_3,
-.container_16 .push_4 {
+.container_12 .push_3 {
   left: 240px;
 }
 
-.container_12 .push_6,
-.container_16 .push_8 {
+.container_12 .push_6 {
   left: 480px;
 }
 
-.container_12 .push_9,
-.container_16 .push_12 {
+.container_12 .push_9 {
   left: 720px;
 }
 
@@ -566,18 +557,15 @@ nav ul li:hover .submenu li, nav ul li.focus .submenu li
 /* `Pull Space >> Global
 ----------------------------------------------------------------------------------------------------*/
 
-.container_12 .pull_3,
-.container_16 .pull_4 {
+.container_12 .pull_3 {
   left: -240px;
 }
 
-.container_12 .pull_6,
-.container_16 .pull_8 {
+.container_12 .pull_6 {
   left: -480px;
 }
 
-.container_12 .pull_9,
-.container_16 .pull_12 {
+.container_12 .pull_9 {
   left: -720px;
 }
 
@@ -635,9 +623,7 @@ nav ul li:hover .submenu li, nav ul li.focus .submenu li
 .clearfix:before,
 .clearfix:after,
 .container_12:before,
-.container_12:after,
-.container_16:before,
-.container_16:after {
+.container_12:after {
   content: '.';
   display: block;
   overflow: hidden;
@@ -649,8 +635,7 @@ nav ul li:hover .submenu li, nav ul li.focus .submenu li
 }
 
 .clearfix:after,
-.container_12:after,
-.container_16:after {
+.container_12:after {
   clear: both;
 }
 
@@ -660,7 +645,6 @@ nav ul li:hover .submenu li, nav ul li.focus .submenu li
 */
 
 .clearfix,
-.container_12,
-.container_16 {
+.container_12 {
   zoom: 1;
 }
