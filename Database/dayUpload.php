@@ -42,7 +42,7 @@ $numRows = 31; //SET THIS ONE YOURSELF
 
 
 for($i = 0; $i < $numRows; $i++){
-	$rowend = strpos($data,'?',$currentrow);
+	$rowend = strpos($data,';',$currentrow);
 	$row = substr($data, $currentrow,$rowend-$currentrow);
 	$currentrow = $rowend+1;
 	$rowArray = explode(" " ,(ltrim($row)));
