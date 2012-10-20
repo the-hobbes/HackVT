@@ -117,12 +117,18 @@ $qRecipe = $recipes->query_recipe();
 		    
 		    <div class="grid_3 wingContent" style="height:480px;">
 		    	<div class="paddingFix">
-			    	<div id="recipie_here" class="grid_3 alpha">
-			    		
-				    </div>
-				    <div class="grid_3 alpha">
-			    		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris iaculis quam quis erat condimentum cursus. Nam vel mattis quam. Donec feugiat adipiscing lorem, ut bibendum libero ornare sed. Quisque interdum, orci eget tincidunt convallis.
-				    </div>
+			    	<div class="grid_3 alpha">
+                        <select id="recipeSelector" name="recipeSelected" size="3">
+                        	<option value="Meat">Recipe 1</option>
+                        	<option value="Vegetables">Recipe 2</option>
+                        	<option value="Fruits">Recipe 3</option>
+                        	<option value="Eggs">Recipe 4</option>
+                        	<option vaule="Dairy" selected="selected">Recipe 5</option>
+                        </select>
+                    </div>
+                    <div class="grid_3 alpha" style="width: 100%;">
+                            <iframe id="frame" src="http://www.uvm.edu"></iframe>
+                    </div>
 			    </div><!-- end padding-fix -->
 			</div><!-- end right-content -->
 
@@ -196,8 +202,9 @@ $qRecipe = $recipes->query_recipe();
 							//var address = markers[i].getAttribute("address");
 							var color = markers[i].getAttribute("fillColor");
 					        var marker = new google.maps.Marker({position: latlng, map: map });
+
 							var html = "<b>" + name + "</b> <br/>"; 	//+ address;
-							var infowindow_1 = new google.maps.InfoWindow({content: name});
+							var infowindow_1 = new google.maps.InfoWindow({content: (name+" "+color)});
 							//alert(infowindow_1);
 							//create the marker on the map
 
