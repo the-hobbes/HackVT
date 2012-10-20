@@ -20,10 +20,10 @@
 	for($i=0; $i<count($array_in); $i++)
 	{
 		$array_in[$i] = strtolower($array_in[$i]);
-		echo $array_in[$i];
+		//echo $array_in[$i];
 	}
 
-	$join = " JOIN ";= 
+	$join = " JOIN "; 
 	//build basic query
 	$query = "SELECT DISTINCT name,latitude,longitude FROM `new_farms`";
 	// ON (`new_farms`.id = `raspberries`.farm_id 
@@ -33,8 +33,10 @@
 		$query = $query . $join . $element;
 	}
 
+	//need to put closing ) at the end!!!
 	$query = $query . " ON ( ";
 
+	//match all individual selections with the farm that has them
 	foreach($array_in as $element)
 	{
 		$query = $query . "`new_farms`.id = ". $element .".farm_id" ." AND ";
@@ -42,44 +44,43 @@
 	//remove trailing AND
 	$query = substr($query, 0, -5);
 
-	//cartesian product of all elements in the selections array
-	foreach ($array_in as $arr)
-	{
-	    array_push($arr,null); // Add a null element to the array to get tuples with less than all arrays
+	//get all combinations of selections, then keep only the pair combos
+	function depth_picker($arr, $temp_string, &$collect) {
+	    if ($temp_string != "") 
+	        $collect []= $temp_string;
 
-	    // This is the cartesian product:
-	    $new_result = array();
-	    foreach ($result as $old_element)
-
-	        foreach ($arr as $el)
-	            $new_result []= array_merge($old_element,array($el));
-
-	    $result = $new_result;
+	    for ($i=0; $i<sizeof($arr);$i++) {
+	        $arrcopy = $arr;
+	        $elem = array_splice($arrcopy, $i, 1); // removes and returns the i'th element
+	        if (sizeof($arrcopy) > 0) {
+	            depth_picker($arrcopy, $temp_string ." " . $elem[0], $collect);
+	        } else {
+	            $collect []= $temp_string. " " . $elem[0];
+	        }   
+	    }   
 	}
 
-	echo $result;
+	$pairs = array();
+	$collect = array();
+	depth_picker($array_in, "", $collect);
+	#we took care of comparing farm_id to each selection, so now generate the pairs
+	foreach ($collect as $value) {
+		$temp = explode(" ", trim($value));
 
-	// foreach($array_in as $element)
-	// {
-	// 	switch ($element) {
-	// 	    case "Meat":
-	// 	        $meat = true;
-	// 	        break;
-	// 	    case "Vegetables":
-	// 	        $vegetables = true;
-	// 	        break;
-	// 	    case "Fruits":
-	// 	        $fruits = true;
-	// 	        break;
-	// 	    case "Eggs":
-	// 	        $eggs = true;
-	// 	        break;
-	// 	    case "Dairy":
-	// 	        $dairy = true;
-	// 	        break;
-	// 	}
-	// }
+		if (count($temp)==2) {
+			#keep the pair!
+			$pairs[] = $temp;
+		}
+	}
+	# now pairs has every pair of the selections
+	# now match each selectionI.farm_id = selectionJ.farm_id
+	foreach ($pairs as $item) {
+		$query = $query . " AND " . $item[0] . '.farm_id = ' . $item[1] . '.farm_id';
+	}
+	#closing ) !!!
+	$query .= ')';
 
+	//echo $query;		
 
 	function parseToXML($htmlStr) 
 	{ 
@@ -91,38 +92,6 @@
 		return $xmlStr; 
 	} 
 
-	// Select all the rows in the farms table
-	$query = "SELECT * FROM farms WHERE ";
-	$categories;
-
-	if($meat)
-		$categories .= "`meat`=1";
-	if($vegetables)
-	{
-		if($categories != "")
-			$categories .= " AND ";
-		$categories .= "`vegetables`=1";
-	}
-	if($fruits)
-	{
-		if($categories != "")
-			$categories .= " AND ";
-		$categories .= "`fruits`=1";
-	}
-	if($eggs)
-	{
-		if($categories != "")
-			$categories .= " AND ";
-		$categories .= "`eggs`=1";
-	}
-	if($dairy)
-	{
-		if($categories != "")
-			$categories .= " AND ";
-		$categories .= "`dairy`=1";
-	}
-
-	$query .= $categories;
 	// echo $query;
 	$result = mysql_query($query);
 
@@ -130,6 +99,7 @@
 	{
 	  die('Invalid query: ' . mysql_error());
 	}
+	//var_dump($result);
 
 	header("Content-type: text/xml");
 
@@ -141,14 +111,11 @@
 	  // ADD TO XML DOCUMENT NODE
 	  echo '<marker ';
 	  echo 'name="' . parseToXML($row['name']) . '" ';
-	  echo 'address="' . parseToXML($row['address']) . '" ';
 	  echo 'lat="' . $row['latitude'] . '" ';
 	  echo 'lng="' . $row['longitude'] . '" ';
 	  echo '/>';
 	}
 
 	// End XML file
-	echo '</markers>';
-
-
+	echo '</markers>';	    
 ?>
