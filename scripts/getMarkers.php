@@ -1,6 +1,6 @@
 <?php
 	include("../../../hackVTconf.php");
-	
+	session_start();
 	
 	//connect to server
 	$link = mysql_connect($database, $username, $password);
@@ -13,11 +13,14 @@
 	if (!$db_selected) {
 	    die ('Can\'t use foo : ' . mysql_error());
 	}
-include("../Database/mySQLDB.php");
+	include("../Database/mySQLDB.php");
 	//$array_in = $_POST["selectedOptions"];
 	
 	$array_in = $_REQUEST['selectedOptions'];
 	
+	$_SESSION['receipes'] = $array_in;
+	
+
 	//lowercase all variables
 	for($i=0; $i<count($array_in); $i++)
 	{

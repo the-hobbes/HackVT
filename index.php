@@ -1,5 +1,7 @@
 <?php
 include("../../hackVTconf.php");
+session_start();
+
 //connect to server
 $link = mysql_connect($database, $username, $password);
 if (!$link) {
@@ -10,6 +12,12 @@ if (!$link) {
 $db_selected = mysql_select_db('PVENDEVI_HackVT', $link);
 if (!$db_selected) {
     die ('Can\'t use foo : ' . mysql_error());
+
+include("scripts/GetRecipes.php");
+$recipes = new GetRecipes();
+$recipes->set_ingredients($_SESSION['receipes']);
+$qRecipe = $recipes->query_recipe();
+
 }
 ?>
 <!DOCTYPE html>
@@ -52,7 +60,7 @@ if (!$db_selected) {
 	<body onload="initialize()">
 		<div class="container_12 shadow gridContent">  
 		    <header>
-			    <div class="grid_10" style="padding-bottom:0px;"><h1>LocalVoracious.</h1></div><!-- end header -->
+			    <div class="grid_10" style="padding-bottom:0px;"><h1>GreenBean</h1></div><!-- end header -->
 			    <div class="clear"></div>  
 			    <!--<div class="grid_12" style="background-color:green">
 				    <nav>
@@ -99,6 +107,7 @@ if (!$db_selected) {
 					    	<select id="ingredientSelector" name="ingredientCategory" multiple="multiple"></select><!-- end foodCategory -->
 					    </div>
 					    <button type="button" onclick="collectResult()">Submit</button>
+					    <button type="button" onclick="collectRecipie()">Show Recipie</button>
 		    	</div><!-- end padding-fix -->
 			</div><!-- end left-content -->  
 
@@ -108,8 +117,8 @@ if (!$db_selected) {
 		    
 		    <div class="grid_3 wingContent" style="height:480px;">
 		    	<div class="paddingFix">
-			    	<div class="grid_3 alpha">
-			    		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris iaculis quam quis erat condimentum cursus. Nam vel mattis quam. Donec feugiat adipiscing lorem, ut bibendum libero ornare sed. Quisque interdum, orci eget tincidunt convallis.
+			    	<div id="recipie_here" class="grid_3 alpha">
+			    		
 				    </div>
 				    <div class="grid_3 alpha">
 			    		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris iaculis quam quis erat condimentum cursus. Nam vel mattis quam. Donec feugiat adipiscing lorem, ut bibendum libero ornare sed. Quisque interdum, orci eget tincidunt convallis.
@@ -125,10 +134,46 @@ if (!$db_selected) {
 			    </div>
 			</footer>
 		</div><!--end 12 column container -->
+		<div id="hiddenStuff">
 
+		</div>
 		<!-- JavaScript -->
 			<script src="scripts/selectionTables.js"></script><!-- code to perform ingredient table selection -->
 			<script>
+
+			function collectRecipie()
+				{
+					var x=document.getElementById("ingredientSelector");
+					selectedOptions = new Array();
+
+					for (i=0;i<x.length;i++)
+					{
+						if (x.options[i].selected)
+							selectedOptions.push(x.options[i].text);
+					}
+
+					//alert(selectedOptions);
+					passToPhpRecipie(selectedOptions);
+				}
+
+				var passToPhpRecipie = function(selectedOptions) {
+		           jQuery.post("scripts/recipieHandler.php", {selectedOptions : selectedOptions}, 
+					function(data)
+					{
+						var recipies = data.getElementsByTagName("recipies");
+						for (var i = 0; i < recipies.length; i++) 
+						{
+							var title =  recipies[i].getAttribute("title");
+							var href = recipies[i].getAttribute("href");
+							var ingredients =recipies[i].getAttribute("ingredients");
+							var thumbnail = recipies[i].getAttribute("thumbnail");
+
+							document.getElementById("recipie_here").innerHTML = "<p><h3>"+title+"</h3>"+"<br />"+href+"<br />"+ingredients+"<br /></p>";
+						}
+					})
+			    };
+
+
 				var passToPhp = function(selectedOptions) {
 		           jQuery.post("scripts/getMarkers.php", {selectedOptions : selectedOptions}, 
 					function(data)
@@ -174,6 +219,7 @@ if (!$db_selected) {
 						if (x.options[i].selected)
 							selectedOptions.push(x.options[i].text);
 					}
+
 					//alert(selectedOptions);
 					passToPhp(selectedOptions);
 				}
