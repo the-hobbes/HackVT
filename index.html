@@ -10,9 +10,44 @@
 		<meta name="viewport" content="width=device-width">
 		<link href='http://fonts.googleapis.com/css?family=Carrois+Gothic' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="css/style.css">
+		<!--google maps api-->
+		<script 
+			type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD6IjVeJmEWLaBdvZDNBbpj0WzbrWSxrp8&amp;sensor=true">
+		</script><!-- end google api map key -->
+		<script type="text/javascript">
+	      function initialize() {
+	        //default map options
+        	var myOptions = 
+			{
+	          center: new google.maps.LatLng(43.80599, -72.729492),
+	          zoom: 7,
+	          mapTypeId: google.maps.MapTypeId.ROADMAP
+	        };
+
+	        //make map
+			var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+			var myLatlng = new google.maps.LatLng(43.128117,-73.098068);
+			var marker = new google.maps.Marker({
+				position: myLatlng,
+				map: map,
+				clickable: true
+			});
+
+			marker.info = new google.maps.InfoWindow({
+				content: '<b>Adam Wilcox Milk-Fed Veal</b> ' + "<br />" + ' 87 Silver Spring Lane Manchester Center, VT, 05255',
+				maxWidth: 200
+			});
+
+			google.maps.event.addListener(marker, 'click', function() {
+				marker.info.open(map, marker);
+			});
+
+	      }
+	    </script><!-- end google maps initilizer -->
 	</head>
 
-	<body>
+	<body onload="initialize()">
 		<div class="container_12" style="background-color:red">  
 		    <header>
 			    <div class="grid_2" style="background-color:yellow"><p>Logo</p></div><!-- end logo -->
@@ -63,9 +98,7 @@
 			</div><!-- end left-content -->  
 
 		    <div class="grid_6" style="background-color:gray">
-				<div class="paddingFix">
-				    	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris iaculis quam quis erat condimentum cursus. Nam vel mattis quam. Donec feugiat adipiscing lorem, ut bibendum libero ornare sed. Quisque interdum, orci eget tincidunt convallis, arcu ipsum blandit massa, vel malesuada augue ante vitae ligula. Donec volutpat congue tortor quis pharetra. Pellentesque condimentum, magna eget facilisis semper, ipsum tellus ornare est, ac rhoncus magna augue scelerisque lectus. Maecenas ornare aliquet sodales. Sed in dui felis, nec mollis magna. Phasellus sit amet facilisis eros.	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris iaculis quam quis erat condimentum cursus. Nam vel mattis quam. Donec feugiat adipiscing lorem, ut bibendum libero ornare sed. Quisque interdum, orci eget tincidunt convallis, arcu ipsum blandit massa, vel malesuada augue ante vitae ligula. Donec volutpat congue tortor quis pharetra. Pellentesque condimentum, magna eget facilisis semper, ipsum tellus ornare est, ac rhoncus magna augue scelerisque lectus. Maecenas ornare aliquet sodales. Sed in dui felis, nec mollis magna. Phasellus sit amet facilisis eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris iaculis quam quis erat condimentum cursus. Nam vel mattis quam. Donec feugiat adipiscing lorem, ut bibendum libero ornare sed. Quisque interdum, orci eget tincidunt convallis, arcu ipsum blandit massa, vel malesuada augue ante vitae ligula. 
-			    </div><!-- end padding-fix -->
+			    	<div id="map_canvas" style="width:460px; height:460px;"></div><!-- Google Map Canvas -->
 			</div><!-- end middle-content -->
 		    
 		    <div class="grid_3" style="background-color:gray">
@@ -89,17 +122,5 @@
 			<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script><!--import jquery from google cdn-->
 			<script src="scripts/selectionTables.js"></script><!-- code to perform table selection -->
 		<!-- end JavaScript -->
-
-		<div class="container_12" style="background-color:red">  
-		    <div class="grid_12" style="background-color:yellow"><p>940px</p></div>  
-		    <div class="clear"></div>  
-		    <div class="grid_4" style="background-color:blue"><p>one</p></div>  
-		    <div class="grid_4" style="background-color:blue"><p>two</p></div>  
-		    <div class="grid_4" style="background-color:blue"><p>three</p></div>  
-		    <div class="clear"></div>  
-		</div>  
-		<!-- JavaScript at the bottom for fast page loading -->
-			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-		<!-- end scripts -->
 	</body>
 </html>
