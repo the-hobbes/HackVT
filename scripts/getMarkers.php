@@ -1,5 +1,7 @@
 <?php
 	include("../../../hackVTconf.php");
+	
+	
 	//connect to server
 	$link = mysql_connect($database, $username, $password);
 	if (!$link) {
@@ -11,7 +13,7 @@
 	if (!$db_selected) {
 	    die ('Can\'t use foo : ' . mysql_error());
 	}
-
+include("../Database/mySQLDB.php");
 	//$array_in = $_POST["selectedOptions"];
 	
 	$array_in = $_REQUEST['selectedOptions'];
@@ -105,7 +107,7 @@
 
 	// Start XML file, echo parent node
 	echo '<markers>';
-
+	//$datab = new mySQLDB($link);
 	// Iterate through the rows, printing XML nodes for each
 	while ($row = @mysql_fetch_assoc($result)){
 	  // ADD TO XML DOCUMENT NODE
@@ -113,6 +115,7 @@
 	  echo 'name="' . parseToXML($row['name']) . '" ';
 	  echo 'lat="' . $row['latitude'] . '" ';
 	  echo 'lng="' . $row['longitude'] . '" ';
+	  echo 'fillColor="' . cropQuality($row['latitude'], $row['longitude']) . '" ';
 	  echo '/>';
 	}
 

@@ -1,17 +1,16 @@
 <?php
-	include("../../hackVTconf.php");
-	//connect to server
-	$link = mysql_connect($database, $username, $password);
-	if (!$link) {
-	    die('Not connected : ' . mysql_error());
-	}
+include("../../hackVTconf.php");
+//connect to server
+$link = mysql_connect($database, $username, $password);
+if (!$link) {
+    die('Not connected : ' . mysql_error());
+}
 
-	//connect to database
-	$db_selected = mysql_select_db('PVENDEVI_HackVT', $link);
-	if (!$db_selected) {
-	    die ('Can\'t use foo : ' . mysql_error());
-	}
-
+//connect to database
+$db_selected = mysql_select_db('PVENDEVI_HackVT', $link);
+if (!$db_selected) {
+    die ('Can\'t use foo : ' . mysql_error());
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -150,12 +149,13 @@
 							//alert(latlng);
 							var name = markers[i].getAttribute("name");
 							//var address = markers[i].getAttribute("address");
-					        var marker = new google.maps.Marker({position: latlng, map: map});
-					
+							var color = markers[i].getAttribute("fillColor");
+					        var marker = new google.maps.Marker({position: latlng, map: map });
 							var html = "<b>" + name + "</b> <br/>"; 	//+ address;
 							var infowindow_1 = new google.maps.InfoWindow({content: name});
 							//alert(infowindow_1);
 							//create the marker on the map
+
 							createMarker(latlng, marker, infowindow_1);
 					    }
 					})
