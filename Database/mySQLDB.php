@@ -67,13 +67,15 @@ class mySQLDB{
 	// below .05 is iffy, above is a ok
 	public function getStats(){
 		$results = $this->con->exec("SELECT * FROM stats;");
-		return $result->fetchAll(PDO::FETCH_ASSOC);
+		return $results->fetchAll(PDO::FETCH_ASSOC);
 	}
 
 	public function cropQuality($lat,$lon){
 		$station = $this->findClosestStation($lat,$lon);
 		$avgRain = $this->getStationAvgRainfall($station);
-		
+		$stats = $this->getStats();
+		print_r($stats);
+		echo 'asdasfas';
 	}
 }
 
@@ -82,6 +84,9 @@ class mySQLDB{
 $w = new mySQLDB();
 $w->findClosestStation(50,36.3);
 var_dump($w->getStationAvgRainfall("BURLINGTON"));
-echo 'heeey hyeey';
+echo 'heeey hyeey</br >';
+
+var_dump($w->cropQuality(45.00,79.4));
+
 
 ?>
