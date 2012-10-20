@@ -11,7 +11,7 @@ http://api.wunderground.com/api/a8be19e4c204a4b0/history_20100101/q/VT.json
 include_once('mySQLDB.php');
 
 class weatherAPIInterface{
-	private $db = new mySQLDB();
+	private $db = null;
 	private $key = 'a8be19e4c204a4b0';
 	private $state = 'VT';
 	private $cities = null;
@@ -19,6 +19,7 @@ class weatherAPIInterface{
 	public function __construct(){
 		$this->getCities();
 		$this->getWeather();
+		$this->db = new mySQLDB();
 	}
 
 	public function curlOn($url){
