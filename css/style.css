@@ -213,12 +213,36 @@ nav ul li:hover .submenu li, nav ul li.focus .submenu li
 {
   width: 95%;
   font-size: 0.875em;
+  height: 100px;
+  margin: 25px 2px 0px 0px;
+}
+
+#categorySelector > option:nth-child(odd) 
+{
+  background-color:#EEEEEE;
+}
+
+#categorySelector > option:nth-child(even)
+{
+  background-color:#FFFFFF;
 }
 
 #ingredientSelector
 {
   width: 95%;
   font-size: 0.875em;
+  height: 300px;
+  margin: 25px 2px 0px 0px;
+}
+
+#ingredientSelector > option:nth-child(odd)
+{
+  background-color:#EEEEEE;
+}
+
+#ingredientSelector > option:nth-child(even)
+{
+  background-color:#FFFFFF;
 }
 
 /* `Padding Fix
