@@ -1,4 +1,3 @@
-HackVT
-======
 
 HackVT Competition
+
