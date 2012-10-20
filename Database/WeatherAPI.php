@@ -44,11 +44,24 @@ class weatherAPIInterface{
 
 	public function getWeather(){
 		//Initilization check.
+		$weather = array();
 		if(is_null($this->cities)){return;}
 		foreach ($this->cities as $city) {
-			$data = $this->curlOn('http://api.wunderground.com/api/'.$this->key.'/history_20100101/q/'.$this->state.'/'.$city.'.json');
-			print_r($data);
-			echo '<br />';
+			$weatherQuery = "2012-01-01"; //Will be date to query on later on
+			$data = json_decode($this->curlOn('http://api.wunderground.com/api/'.$this->key.'/history_20100101/q/'.$this->state.'/'.$city.'.json'));
+			$dayData = $data->history->dailysummary; $dayData = $dayData[0];
+			//Get the important things out of the query:
+			$weatherQuery.= " " +(string)($dayData->maxhumidity);
+			$weatherQuery.= " " +(string)($dayData->minhumidity);
+			$weatherQuery.= " " +(string)($dayData->rain);
+			$weatherQuery.= " " +(string)($dayData->snow);
+			$weatherQuery.= " " +(string)($dayData->hail);
+			$weatherQuery.= " " +(string)($dayData->precipi);
+			$weatherQuery.= " " +(string)($dayData->maxtempi);
+			$weatherQuery.= " " +(string)($dayData->mintempi);
+			$weatherQuery.= " " +(string)($dayData->meantempi);
+			echo $weatherQuery;
+			echo '<br /><br />';
 		}
 	}
 
