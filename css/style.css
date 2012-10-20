@@ -31,15 +31,16 @@ ul {
   line-height: 1.28571; /* 18px / 14px = 1.28571 */
 }
 
-li {
-  margin-bottom: 0.42857em; /* 6px / 14px = 0.42857em */
-}
+/*li {
+  margin-bottom: 0.42857em; /* 6px / 14px = 0.42857em 
+}*/
 
 /* `Navigation styling
 ----------------------------------------------------------------------------------------------------*/
 nav
 {
   font: 2em;
+  font-weight: bold;
   background: #E3E3E3;
   background: -moz-linear-gradient(#F5F5F5, #E3E3E3);
   background: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0, #F5F5F5), color-stop(0.98, #E3E3E3), color-stop(1, #FFFFFF));
@@ -50,7 +51,7 @@ nav ul li
   position: relative;
   display: inline-block;
   vertical-align: top;
-  border-right: 1px solid #EEEEEE;
+  /*border-right: 1px solid #EEEEEE;*/
   /* For IE6/7 */ 
   *display: inline;
   zoom: 1.5;
@@ -106,6 +107,7 @@ nav ul a:hover, nav ul a:focus
 
 .submenu li
 {
+  display: inline;
   height: 0;
   line-height: 15px;
   background: #FFFFFF;
@@ -124,6 +126,18 @@ nav ul li:hover .submenu, nav ul li.focus .submenu
 nav ul li:hover .submenu li, nav ul li.focus .submenu li
 {
   height: 25px;
+}
+
+/* phelan write a comment here */
+
+#categorySelector
+{
+  width: 95%;
+}
+
+#ingredientSelector
+{
+  width: 95%;
 }
 
 /* `Padding Fix
