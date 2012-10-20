@@ -25,6 +25,15 @@
         <meta name="description" content="" />
         <meta name="keywords" content="HackVT, Hackathon, Collateral Damage, Recipe Farm, etc." />
 
+        <!--[if IE]>
+			<style>
+				#frame 
+				{
+	    			zoom: 0.2;
+				}
+			</style>
+		<[endif]-->
+
 		<link href='http://fonts.googleapis.com/css?family=Carrois+Gothic' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="css/style.css">
 		<!--google maps api-->
@@ -84,7 +93,11 @@
 		    	<div class="paddingFix">
 						
 						<div class="grid_3 alpha">
+<<<<<<< HEAD
+							<form name="input" action="scripts/getMarkers.php" method="post">
+=======
 							<form name="input" >
+>>>>>>> fc106494ae78447ec5ae7ff9ef9b176b7701e0da
 					    		<select id="categorySelector" name="foodCategory[]" multiple="multiple">
 								    <option value="Meat">Meat</option>
 								    <option value="Vegetables">Vegetables</option>
@@ -92,7 +105,11 @@
 								    <option value="Eggs">Eggs</option>
 								    <option vaule="Dairy" selected="selected">Dairy</option>
 								</select><!-- end foodCategory -->
+<<<<<<< HEAD
+					    		<input name="submit" type="submit">
+=======
 				    		<!--<input id="submit" name="submit" type="submit">-->
+>>>>>>> fc106494ae78447ec5ae7ff9ef9b176b7701e0da
 							</form>
 					    </div><!-- end food catagory selector div -->
 
@@ -104,17 +121,18 @@
 			</div><!-- end left-content -->  
 
 		    <div class="grid_6 wingContent">
-			    	<div id="map_canvas" style="width:460px; height:480px; "></div><!-- Google Map Canvas -->
+				<div id="map_canvas" style="width:460px; height:480px; "></div><!-- Google Map Canvas -->
 			</div><!-- end middle-content -->
 		    
 		    <div class="grid_3 wingContent" style="height:480px;">
 		    	<div class="paddingFix">
 			    	<div class="grid_3 alpha">
-			    		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris iaculis quam quis erat condimentum cursus. Nam vel mattis quam. Donec feugiat adipiscing lorem, ut bibendum libero ornare sed. Quisque interdum, orci eget tincidunt convallis.
-				    </div>
-				    <div class="grid_3 alpha">
-			    		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris iaculis quam quis erat condimentum cursus. Nam vel mattis quam. Donec feugiat adipiscing lorem, ut bibendum libero ornare sed. Quisque interdum, orci eget tincidunt convallis.
-				    </div>
+		    			<select id="recipeSelector" name="recipeSelected" size="3" onChange="alert(this.selectedIndex)">
+		    			</select>
+		    		</div>
+		    		<div class="grid_3 alpha">
+		    			<iframe id="frame" src="http://www.uvm.edu"></iframe>
+		    		</div>
 			    </div><!-- end padding-fix -->
 			</div><!-- end right-content -->
 
