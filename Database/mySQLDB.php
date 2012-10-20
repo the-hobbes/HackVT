@@ -36,7 +36,7 @@ class mySQLDB{
 
 		$result = $this->con->prepare("INSERT INTO daydata VALUES ( ?,?,?,?,?,?,?,?);");
 		$result->execute(array($station_name,$max_tmp,$min_tmp,$avg_tmp,$num,$rainfall,$year,$month ));
-
+		$results = $this->con->exec("create view stats as select station_name,avg(max_tmp),avg(min_tmp),avg(avg_tmp) from daydata group by station_name;");
 	}
 
 	public function findClosestStation($lat,$lon){
@@ -62,6 +62,18 @@ class mySQLDB{
 		$query->bindValue(1,$station,PDO::PARAM_STR);
 		$query->execute();
 		return $query->fetch(PDO::FETCH_ASSOC);
+	}
+
+	// below .05 is iffy, above is a ok
+	public function getStats(){
+		$results = $this->con->exec("SELECT * FROM stats;");
+		return $result->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+	public function cropQuality($lat,$lon){
+		$station = $this->findClosestStation($lat,$lon);
+		$avgRain = $this->getStationAvgRainfall($station);
+		
 	}
 }
 
