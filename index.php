@@ -9,7 +9,6 @@
         <meta name="author" content="Dillan, Phelan, Garth, Scott, Ethan." />
         <meta name="description" content="" />
         <meta name="keywords" content="HackVT, Hackathon, etc." />
-
         <link rel="stylesheet" href="style.css" type="text/css" media="screen">
 	</head>
 	<body>
