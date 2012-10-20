@@ -52,12 +52,11 @@ class weatherAPIInterface{
 		//Initilization check.
 		$weather = array();
 		//SET THIS TO START DATA OF YOUR CHOOSING YYYY-MM-DD
-		$weather['date'] = "2012-01-01"; 
+		$weather['date'] = "2012-01-02"; 
 		if(is_null($this->cities)){return;}
 		for($i =0; $i < 71; $i++){
 			foreach ($this->cities as $city) {
 				//increment the date starting at the start date
-				set_time_limit(60);
 				//Will be date to query on later on
 				$data = json_decode($this->curlOn('http://api.wunderground.com/api/'.$this->key.'/history_'.implode(explode('-',$weather['date'])).'/q/'.$this->state.'/'.urlencode($city).'.json'));
 				$dayData = $data->history->dailysummary; $dayData = $dayData[0];
@@ -75,7 +74,8 @@ class weatherAPIInterface{
 				$this->db->inputWeather($weather);
 
 				if($this->apiRequests % 10){
-					sleep(10);
+					set_time_limit(80);
+					sleep(60);
 					if($this->apiRequests >= 500){
 						die('CANT ASK FOR MORE CAPTAIN');
 					}

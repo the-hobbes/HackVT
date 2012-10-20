@@ -27,10 +27,9 @@ class mySQLDB{
 		$result->bindValue(8,$wArray['maxTemp'],PDO::PARAM_STR);
 		$result->bindValue(9,$wArray['minTemp'],PDO::PARAM_STR);
 		$result->bindValue(10,$wArray['avgTemp'],PDO::PARAM_STR);
-		var_dump($result->execute());
+		$result->execute();
 
 	}
 }
 
-new mySQLDB();
 ?>
