@@ -66,6 +66,8 @@
 				//display a list of ingredients based on food category selection
 				var ingredientSelector = function(str)
 				{
+					$('#ingredientSelector').empty(); //empty out the selector so only the desired elements show up
+
 					//set up ingredient arrays by category
 					var meats = new Array("Chicken", "Beef", "Lamb", "Veal", "Venison");
 					var vegetables = new Array("Corn", "Tomatoes", "Carrots", "Cabbage", "Lettuce", "Kale");
@@ -99,22 +101,24 @@
     					}
     				}
 					 
-
     				//add ingredients from each category to selector
     				for (var i = 0; i < targetCategories.length; i++)
     				{
-    					$('#dropListBuilding').append($('<option>', { value: value, text : value })
+    					$('#ingredientSelector').append($('<option>', { 
+    						value: i, 
+    						text : targetCategories[i] 
+    					}));
     				}
-					
 				}
 
 				//Function to determine which category of food you'd like to choose ingredients from 
 				$("#categorySelector").change(function () {
 		          var str = "";
+		          changed = false;
+
 		          $("select option:selected").each(function () {
 		                str += $(this).text() + ",";
 		              });
-		          //$('#ingredientList').text(str);
 		          ingredientSelector(str);
 		        })
 		        .trigger('change');
