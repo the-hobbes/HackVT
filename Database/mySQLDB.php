@@ -54,12 +54,22 @@ class mySQLDB{
 				$best = $station['name'];
 			}
 		}
-		var_dump($best);
+		return $best;
+	}
+
+	public function getStationAvgRainfall($station){ 
+		$query = $this->con->prepare('select avg(rainfall) from daydata where station_name = ? ');
+		$query->bindValue(1,$station,PDO::PARAM_STR);
+		$query->execute();
+		return $query->fetch(PDO::FETCH_ASSOC);
 	}
 }
 
+
+
 $w = new mySQLDB();
 $w->findClosestStation(50,36.3);
+var_dump($w->getStationAvgRainfall("BURLINGTON"));
 echo 'heeey hyeey';
 
 ?>
