@@ -45,26 +45,48 @@
 	        //make map
 			var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 
-			//what point?
-			var myLatlng = new google.maps.LatLng(43.128117,-73.098068);
+			//call downloadurl and get all marker elements
+			downloadUrl("getMarkers.php", function(data) 
+			{
+				var markers = data.documentElement.getElementsByTagName("marker");
+				
+				//loop through the xml file and grab all the necessary information
+	      		for (var i = 0; i < markers.length; i++) 
+				{
+	        		var latlng = new google.maps.LatLng(parseFloat(markers[i].getAttribute("latitude")),
+			                                    parseFloat(markers[i].getAttribute("longitude")));
+			
+					var name = markers[i].getAttribute("name");
+					//var address = markers[i].getAttribute("address");
+			        var marker = new google.maps.Marker({position: latlng, map: map});
+			
+					var html = "<b>" + name + "</b> <br/>"; 	//+ address;
+					var infowindow_1 = new google.maps.InfoWindow({content: html});
+					
+					//create the marker on the map
+					createMarker(latlng, marker, infowindow_1);
+			    }
+ 			});
 
-			//make marker
-			var marker = new google.maps.Marker({
-				position: myLatlng,
-				map: map,
-				clickable: true
-			});
-			//set marker info
-			marker.info = new google.maps.InfoWindow({
-				content: '<b>Adam Wilcox Milk-Fed Veal</b> ' + "<br />" + ' 87 Silver Spring Lane Manchester Center, VT, 05255',
-				maxWidth: 200
-			});
+			//load object lets you retrieve a file that resides on the same domain as the requesting webpage
+			function downloadUrl(url,callback) 
+			{
+				var request = window.ActiveXObject ?
+				new ActiveXObject('Microsoft.XMLHTTP') :
+				new XMLHttpRequest;
 
-			//add clickable marker
-			google.maps.event.addListener(marker, 'click', function() {
-				marker.info.open(map, marker);
-			});
+				request.onreadystatechange = function() 
+				{
+					if (request.readyState == 4) 
+					{
+					request.onreadystatechange = doNothing;
+					callback(request, request.status);
+					}
+			 	};
 
+				request.open('GET', url, true);
+				request.send(null);
+			}
 	      }
 	    </script><!-- end google maps initilizer -->
 	</head>
@@ -103,19 +125,21 @@
 		    	<div class="paddingFix">
 						
 						<div class="grid_3 alpha">
-				    		<select id="categorySelector" name="foodCategory" multiple="multiple">
-							    <option>Meat</option>
-							    <option selected="selected">Vegetables</option>
-							    <option>Fruits</option>
-							    <option selected="selected">Dairy</option>
+							<form name="input" action="scripts/getMarkers.php" method="post">
+				    		<select id="categorySelector" name="foodCategory[]" multiple="multiple">
+							    <option value="Meat">Meat</option>
+							    <option value="Vegetables">Vegetables</option>
+							    <option value="Fruits">Fruits</option>
+							    <option value="Eggs">Eggs</option>
+							    <option vaule="Dairy" selected="selected">Dairy</option>
 							</select><!-- end foodCategory -->
+				    		<input name="submit" type="submit">
+							</form>
+
 					    </div><!-- end food catagory selector div -->
 
 					    <div class="grid_3 alpha">
-					    	<form name="input" action="scripts/getMarkers.php" method="post">
-					    		<select id="ingredientSelector" name="foodCategory" multiple="multiple"></select><!-- end foodCategory -->
-					    		<input name="submit" type="submit" value="Submit">
-							</form>
+					    	<select id="ingredientSelector" name="foodCategory" multiple="multiple"></select><!-- end foodCategory -->
 					    </div>
 
 		    	</div><!-- end padding-fix -->
