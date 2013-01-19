@@ -1,8 +1,9 @@
 HackVT Competition
+-------------------
 
 Team: Dillan Wilding, Phelan Vendeville, Garth Fritz, Ethan Eldridge, and Scott MacEwan.
 
-Project: GreenBean
+Project Title: GreenBean
 
 Description
 ------------
